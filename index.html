@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LV-Haystack</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background: #f9f9f9;
+          /* 整体字体稍微缩小 */
+          font-size: 14px;
+        }
+        .infographic-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          justify-content: center;
+          align-items: flex-start;
+        }
+        .info-card {
+          background: #fff;
+          border-radius: 10px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+          width: 300px;
+          padding: 20px;
+          text-align: left;
+        }
+        .info-card img {
+          display: block;       /* 变成块级元素以便使用 margin:0 auto */
+          margin: 0 auto 8px;   /* 水平居中 + 设置8px底部外边距 */
+          width: 40px;
+          height: 40px;
+          object-fit: contain;
+        }
+        .info-title {
+          margin: 8px 0 4px;
+          font-size: 16px; /* 原先 18px，稍降 */
+          font-weight: bold;
+          text-align: center;
+        }
+        .info-subtitle {
+          color: #777;
+          margin-bottom: 10px;
+          font-size: 14px;
+          text-align: center;
+        }
+        .info-card p {
+          line-height: 0.5;   
+          /* 字体颜色（示例 #777 比 #000 浅一些）*/
+          color: #777;        
+          margin: 4px 0;      
+        }
+
+        #abstract h1, #abstract p {
+            color: #000000;
+            text-align: justify;
+            text-justify: inter-word; 
+        }
+        h1 {
+            color: #4E2A84;
+        }
+        h2 {
+            color: #4E2A84;
+            text-align: justify;
+            font-size: medium;
+        }
+        h3 {
+            text-align: justify;
+            font-size: medium;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .summary {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .author-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .author-name a {
+            text-decoration: none;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .author-name a:hover {
+            text-decoration: underline;
+        }
+        .slideshow-container {
+          position: relative;
+          max-width: 100%;
+          margin: auto;
+          overflow: hidden; /* 若有视频溢出，隐藏 */
+        }
+
+        /* 每个幻灯片 */
+        .mySlides {
+          display: flex;
+          gap: 20px;
+          justify-content: center;
+          align-items: flex-start; /* 如果高度有差异，可让顶部对齐 */
+        }
+
+        .mySlides > div {
+          flex: 1;               /* 两列平均分 */
+          max-width: 600px;      /* 可以给个最大宽度限制 */
+          box-sizing: border-box;
+        }
+
+        .mySlides video {
+          width: 100%;
+          height: auto;
+          vertical-align: middle; /* 防止底部出现几像素的空隙 */
+        }
+
+        /* 幻灯片内文字 */
+        .text {
+          /* 如果之前有下述属性，可暂时注释掉或移除 */
+          /* white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden; */
+          white-space: normal;   
+          overflow: visible;  
+        }
+
+        /* 上/下一个 按钮 */
+        .prev, .next {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          width: auto;
+          padding: 16px;
+          margin-top: -22px;
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          border-radius: 0 3px 3px 0;
+          user-select: none;
+          z-index: 1;
+          background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+        }
+        .next {
+          right: 0;
+          border-radius: 3px 0 0 3px;
+        }
+        .prev:hover, .next:hover {
+          background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* 小圆点指示器样式 */
+        .dot {
+          cursor: pointer;
+          height: 15px; 
+          width: 15px; 
+          margin: 0 2px; 
+          background-color: #bbb; 
+          border-radius: 50%;
+          display: inline-block; 
+          transition: background-color 0.6s ease;
+        }
+        .active, .dot:hover {
+          background-color: #717171;
+          p {
+            text-align: justify; /* 两边对齐 */
+          }
+          .full-page-image {
+            position: relative;
+            width: 100%;
+            min-height: 100px; 
+          /* 如果想保持窗口全屏高度，可用 height: 100vh; */
+          /* height: 100vh; */
+            overflow: hidden;  /* 防止子元素溢出 */
+          }
+
+          .full-page-image img {
+            display: block;         /* 避免默认内联元素空隙 */
+            width: 100%;            /* 让图片随父容器宽度自适应 */
+            height: auto;           /* 等比例缩放，不至于溢出 */
+            object-fit: cover;      /* 如果想让图片完全覆盖容器，但可能截取部分 */
+          }
+
+          .overlay {
+            position: absolute; 
+            top: 0; left: 0; 
+            right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.3); /* 半透明蒙层示例 */
+          }
+
+          .content {
+            position: relative; /* 确保在 overlay 之上 */
+            z-index: 1;         
+            color: #fff;        /* 文字颜色看需求 */
+          /* 其他排版、间距等 */
+          }
+        }
+
+        /* ---------------------------
+           NEW STYLES FOR OBJECT-SIZE
+           SECTION (QUESTION / ANSWER)
+        ---------------------------- */
+        .object-size-container {
+          max-width: 600px;
+          margin: 30px auto;
+          background: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .object-size-container h2 {
+          margin-top: 0;
+        }
+        .label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #4E2A84; /* or your choice of purple */
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            z-index: 10; /* Ensures it stays on top */
+        }
+
+        .object-video-container {
+          margin: 20px 0;
+          text-align: center;
+          position: relative; 
+          display: inline-block;
+        }
+
+        .object-video-container video {
+          max-width: 100%;
+          height: auto;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          position: relative; 
+          display: inline-block;
+        }
+
+        .object-question {
+          font-weight: bold;
+          margin: 20px 0 10px;
+        }
+
+        .reveal-button {
+          background-color: #4E2A84;
+          color: #fff;
+          padding: 10px 15px;
+          border: none;
+          cursor: pointer;
+          border-radius: 4px;
+          margin-top: 10px;
+        }
+
+        /* .reveal-button:hover {
+          background-color: #0056b3;
+        } */
+
+        .answer {
+          display: none;
+          /* margin-top: 15px; */
+          /* padding: 15px; */
+          /* border: 1px solid #ddd; */
+          /* border-radius: 4px; */
+          background-color: #f9f9f9;
+        }
+
+    </style>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="[[ICON_PNG]]">
+    <link rel="icon" type="image/png" sizes="32x32" href="[[ICON_PNG]]">
+    <link rel="icon" type="image/png" sizes="16x16" href="[[ICON_PNG]]">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="[[ICON_PNG]]"/>
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:url" content="[[OG_URL]]"/>
+    <meta property="og:title" content="[[OG_TITLE]]"/>
+    <meta property="og:description" content="[[OG_DESCRIPTION]]"/>
+
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="[[TWITTER_TITLE]]"/>
+    <meta name="twitter:description" content="[[TWITTER_DESCRIPTION]]"/>
+    <meta name="twitter:creator" content="[[TWITTER_CREATOR]]"/>
+
+    <meta name="twitter:label1" content="Published at"/>
+    <meta name="twitter:data1" content="[[PUBLISHED_AT]]"/>
+    <meta name="twitter:label2" content="Reading time"/>
+    <meta name="twitter:data2" content="[[READING_TIME]]"/>
+</head>
+<body>
+<!-- <div class="full-page-image">
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="/Users/sunhaosen/Desktop/LV-Haystack/assets/img/Demo_0108_v3.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="content" style="padding: 0 20px">
+        <h1>Re-thinking Temporal Search for Long-Form Video Understanding</h1>
+        <p>[[MAIN_SUBTEXT]]</p>
+    </div>
+</div> -->
+<div class="full-page-image">
+    <video
+      src="assets/videos/main.mp4"
+      autoplay
+      loop
+      muted
+      playsinline
+      style="width: 100%; height: 100%; object-fit: cover;"
+    ></video>
+    <div class="overlay"></div>
+    <div class="content" style="padding: 0 20px">
+        <h1>Needle-in-Haystack in LongVideo Understanding</h1>
+        <p>Re-thinking Temporal Search for Long-Form Video Understanding</p>
+    </div>
+</div>
+
+<div id="title_slide">
+    <div class="title_left">
+        
+        <h1 style="color:#4E2A84;"> Re-thinking Temporal Search for Long-Form Video Understanding </h1>
+        <div class="author-container">
+            <div class="author-name"><a href="https://jhuiye.com/" target="_blank">Jinhui Ye<sup>1</sup></a></div>
+            <div class="author-name"><a href="https://zihanwang314.github.io/" target="_blank">Zihan Wang<sup>2</sup></a></div>
+            <div class="author-name"><a href="https://haosensun.github.io/" target="_blank">Haosen Sun<sup>2</sup></a></div>
+            <div class="author-name"><a href="https://keshik6.github.io/" target="_blank">Keshigeyan Chandrasegaran<sup>1</sup></a></div>
+            <div class="author-name"><a href="https://zanedurante.github.io/" target="_blank">Zane Durante<sup>1</sup></a></div>
+            <div class="author-name"><a href="https://ceyzaguirre4.github.io/" target="_blank">Cristobal Eyzaguirre<sup>1</sup></a></div>
+            <div class="author-name"><a href="https://talkingtorobots.com/yonatanbisk.html" target="_blank">Yonatan Bisk<sup>3</sup></a></div>
+            <div class="author-name"><a href="https://www.niebles.net/" target="_blank">Juan Carlos Niebles<sup>1</sup></a></div>
+            <div class="author-name"><a href="https://profiles.stanford.edu/ehsan-adeli" target="_blank">Ehsan Adeli<sup>1</sup></a></div>
+            <div class="author-name"><a href="https://profiles.stanford.edu/fei-fei-li/" target="_blank">Li Fei-Fei<sup>1</sup></a></div>
+            <div class="author-name"><a href="https://jiajunwu.com/" target="_blank">Jiajun Wu<sup>1</sup></a></div>
+            <div class="author-name"><a href="https://limanling.github.io/" target="_blank">Manling Li<sup>2</sup></a></div>
+        </div>
+        <br>
+        <p class="affiliation">
+            <sup>1</sup>Stanford University &nbsp; 
+            <sup>2</sup>Northwestern University &nbsp; 
+            <sup>3</sup>Carnegie Mellon University &nbsp; 
+        </p>
+        <br>
+        <div class="button-container">
+            <a href="[[LINK]]" target="_blank" class="button"><i class="ai ai-arxiv"></i>&emsp14;arXiv</a>
+            <a href="assets/pdf/5448_Re_thinking_Temporal_Sear.pdf" target="_blank" class="button"><i class="fa-light fa-file"></i>&emsp14;PDF</a>
+            <a href="[[LINK]]" target="_blank" class="button"><i
+                    class="fa-brands fa-x-twitter"></i>&emsp14;tl;dr</a>
+            <a href="[[LINK]]" target="_blank" class="button"><i
+                    class="fa-light fa-code"></i>&emsp14;Code</a>
+            <a href="http://mll-4090-3.cs.northwestern.edu:8082/" target="_blank" class="button"><i
+                    class="fa-light fa-robot-astromech"></i>&emsp14;Demo</a>
+            <a href="https://huggingface.co/datasets/LVHaystack/LongVideoHaystack" target="_blank" class="button"><i
+                    class="fa-light fa-face-smiling-hands"></i>&emsp14;Data</a>
+        </div>
+        
+        <div id="abstract">
+            <h2> We Introduce <strong><em>T*</em></strong> and <strong>LV-Haystack</strong>, the latest advancements in Vision-Language Models (VLMs) for Comprehensive Long Video Understanding. 
+            </h2>
+            <br>
+            <h3>&#x1F31F; Our Contributions:</h3>
+            <br>
+            <ul>
+                <li><strong>Lightweight Plugin:</strong> T* enhances LLaVA-OV-72B from 56% to 62% and GPT-4o from 50% to 53% using just 32 frames.</li>
+                <li><strong>Faster Inference:</strong> Reduced latency from 34.9 seconds to 10.4 seconds and lowered computational demand from 691 TFLOPs to 170 TFLOPs compared to the previous state-of-the-art.</li>
+                <li><strong>Large-Scale Dataset:</strong> LV-Haystack includes 300 hours of video content and 11,000 samples.</li>
+            </ul>
+        </div>
+
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/Demo_0122_c1q2.mp4" type="video/mp4">
+                </video>
+                <div class="text">Q1: Who did I talk to in the living room?</div>
+            </div>
+
+            <div class="mySlides fade">
+                <video autoplay muted playsinline loop preload="metadata" width="100%">
+                    <source src="assets/videos/Demo_0122_v1.mp4" type="video/mp4">
+                </video>
+                <div class="text">Q2: Where was the white trash can before I raised it?</div>
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+        </div>
+        
+
+        <div id="overview">
+            <h1>Abstract</h1>
+            <p>
+                We introduce the “Long Video Haystack” task: finding a minimal set of relevant frames (one to five) from tens of thousands of frames for given queries. We provide LV-HAYSTACK, a new benchmark of 3,874 human-annotated instances with fine-grained metrics for keyframe search quality and efficiency. Current methods only achieve a 2.1% temporal F1 score on its LVBENCH subset, highlighting a large gap.
+            <p>
+                To address this, we propose <em>T*</em>, a lightweight keyframe search framework that reframes expensive temporal search as a spatial search. <em>T*</em> leverages image-based visual localization capabilities and introduces adaptive zooming-in across temporal and spatial dimensions. Under a 32-frame inference budget, <em>T*</em> boosts GPT-4o's performance from 50.5% to <strong>53.1%</strong>, and LLaVA-OneVision-OV-72B's from 55.5% to <strong>62.4%</strong> on the LongVideoBench XL subset.              
+            <p>
+        </div>
+
+    </div>
+</div>
+<hr class="rounded">
+
+<div></div>
+
+
+<div style="text-align: center; margin-top: 20px;">
+    <img 
+      src="assets/img/image.png" 
+      alt="Sample Image" 
+      width="600px" 
+      style="display: block; margin: 0 auto;"
+    >
+    <div style="
+         width: 600px; 
+         margin: 5px auto 0 auto; 
+         text-align: left; 
+         color: #555;
+    ">
+      <p style="font-size: 10px; text-align: justify;">
+        <strong>Figure 1.</strong> Extrinsic evaluation results demonstrate how <em>T*</em> improves VLMs by selecting 8 keyframes (needle) from a large haystack, highlighting the significance of <strong>vision-centric search</strong>.
+      </p>
+    </div>
+  </div>
+  
+<div id="overview">
+    <h1>Method Overview</h1>
+    <div style="font-family: Arial, sans-serif; text-align: justify;">
+        <p>
+            <strong> <em>T*</em></strong> is an advanced temporal search framework designed to efficiently identify key frames relevant to specific queries.
+            By transforming <strong>temporal search</strong> into <strong>spatial search</strong>, <em>T*</em> leverages lightweight object detectors and Visual Language Model (VLM) visual grounding techniques to streamline the process.
+            <em>T*</em> demonstrates exceptional performance, both with and without additional training, making it a versatile and powerful tool for various applications.
+        </p>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="assets/img/methodv10.png" alt="Diagram illustrating the methodology of the project" width="600px" height="250px">
+        <div style="text-align: left; color: #555;">
+            <p style="font-size: 10px;"><strong>Figure 2.</strong> <em>T*</em> efficiently searches keyframes in long videos via adaptive temporal and spatial upsampling. First, a VLM identifies target cues from the question (Visual Grounding). Next, a Spatial Searching Model (e.g., YOLO-world) zooms in from coarse to fine frame distributions, avoiding exhaustive frame-by-frame scans. Finally, T* selects K keyframes for QA, serving as visual input to downstream VLMs.</p>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="assets/img/algorithm.png" alt="Sample Image" width="600px" height="200px">
+    </div>
+
+    <h1>Experiments</h1>
+    <p><strong>Evaluations on Downstream Tasks: Video QA<strong></p>
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="assets/img/figure4.png" alt="Sample Image" width="600px" height="230px">
+        <div style="text-align: justify; color: #555;">
+            <p style="font-size: 10px;"><strong>Table 1.</strong>  QA accuracy (%) of <em>T*</em> used as a frame selection module for VLMs on two long-form QA benchmarks: LongVideoBench and Video-MME (without subtitles for fairness). Top-performing models (in gray) often use many more frames, making comparisons less direct. Models are ranked by their XLong video performance on LongVideoBench and total score on Video-MME, with frame counts noted. All baseline numbers come from their respective publications.</p>
+        </div>
+    </div>
+
+    <h1>LV-HAYSTACK Data</h1>
+    
+    <div class="infographic-wrapper">
+        <div class="infographic-container">
+            
+            <!-- 卡片1：Haystack-Ego4D -->
+            <div class="info-card">
+            <img src="assets/logos/DALL1.png" alt="Ego Icon">
+            <div class="info-title">HAYSTACK-EGO4D</div>
+            <div class="info-subtitle">Egocentric</div>
+            <p><strong>video</strong>: 244</p>
+            <p><strong>length</strong>: 101.1 h (~24.8 min/video)</p>
+            <p><strong>frame</strong>: 10,910,850 (~44,717/video)</p>
+            <p><strong>QA pair</strong>: 3,874 (~15.9/video)</p>
+            <p><strong>keyframe</strong>: 18,370 (~4.7/question)</p>
+            </div>
+    
+            <!-- 卡片2：Haystack-LVBench -->
+            <div class="info-card">
+            <img src="assets/logos/DALL2.png" alt="Allocentric Icon">
+            <div class="info-title">HAYSTACK-LVBENCH</div>
+            <div class="info-subtitle">Allocentric</div>
+            <p><strong>video</strong>: 246</p>
+            <p><strong>length</strong>: 57.7 h (~14.1 min/video)</p>
+            <p><strong>frame</strong>: 4,701,551 (~19,112/video)</p>
+            <p><strong>QA pair</strong>: 602 (~2.4/video)</p>
+            <p><strong>keyframe</strong>: 1,071 (~1.8/question)</p>
+            </div>
+    
+        </div>
+    </div>
+    <h1>Evaluations on Search Utility and Efficiency</h1>
+    <p>We explore disentangled evaluation of temporal search & video understanding with 6 fine-grained search metrics.
+    </p>
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="assets/img/table2.png" alt="Sample Image" width="600px" height="180px">
+        <div style="text-align: justify; color: #555;">
+            <p style="font-size: 10px;"><strong>Table 2.</strong> Search efficiency results on LV-HAYSTACK, covering both searching and overall video-understanding performance. Unless noted (e.g., Uniform-32), 8 frames are used for LLaVA-OneVision-72B QA. We report the model plus average call turns for grounding and matching (e.g., VideoAgent calls GPT-4 four times). <em>T*</em> achieves strong QA with minimal search cost, demonstrating efficient long-form video understanding. <sup>†</sup>FLOPs for VideoAgent exclude GPT-4 costs, due to its closed-source nature.</p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="assets/img/table3.png" alt="Sample Image" width="600px" height="220px">
+        <div style="text-align: justify; color: #555;">
+            <p style="font-size: 10px;"><strong>Table 3.</strong> Searching utility on LV-HAYSTACK. The best 8-frame results are 
+                <u>underlined</u>, while the best 32-frame results are <strong>bold</strong>. Increasing 
+                searched frames improves recall but reduces precision (e.g., in retrieval methods). 
+                Detector-based <em>T*</em> leads the 32-frame setting across multiple metrics, demonstrating 
+                visual grounding plus iterative temporal searching. Although attention-based <em>T*</em> 
+                performs well at 8 frames, it relies on larger foundation models, impacting efficiency.</p>
+        </div>
+    </div>
+
+    <h1>Conclusion</h1>
+    <div style="text-align: justify;">
+        <p>
+            We revisit temporal search for long-form video understanding, focusing on a core challenge for state-of-the-art (SOTA) long-context vision-language models (VLMs). First, we formalize temporal search as a “Long Video Haystack” problem: finding a minimal set of relevant frames (among tens of thousands) given specific queries. To validate this, we introduce <strong>LV-HAYSTACK</strong>, featuring 3,874 human-annotated instances and fine-grained evaluation metrics for keyframe search quality and efficiency. Experimental results on <strong>LV-HAYSTACK</strong> reveal a significant gap in temporal search capabilities under SOTA keyframe selection methods. We further propose a lightweight keyframe searching framework, <em>T*</em>, reframing the costly temporal search into a spatial search task. Extensive experiments show that integrating <em>T*</em> into existing methods significantly boosts SOTA performance. We hope <strong>LV-HAYSTACK</strong> and <em>T*</em> will foster impactful algorithmic advances for efficient long-form video understanding.
+        </p>
+    </div>
+
+    <h1>Acknowledgement</h1>
+    <p>[[ACKNOWLEDGEMENT_CONTENT]]</p>
+
+    <h1>BibTeX</h1>
+    <p class="bibtex">[[BIBTEX_CONTENT]]</p>
+    <br>
+
+
+    <div class="object-size-container">
+      <h2>title!</h2>
+      <!-- <h3>Object Size</h3> -->
+      <div class="object-video-container">
+        <span class="label">where</span>
+        <!-- Replace 'chair_video.mp4' with your actual video source -->
+        <video width="600" height="320" controls>
+          <source src="assets/videos/51e04dae-3ad0-48c1-b94b-c3ba0edaa99e (online-video-cutter.com).mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <p style="margin-top: 5px; font-size: 12px; color: #666;">This video is playing at 4x speed. You can adjust the speed using the controls above.</p>
+      </div>
+
+      <div class="object-question">
+        Question: Where did I see the basket?
+      </div>
+
+      <button class="reveal-button" id="toggleAnswer">
+        Click to view Ground Truth and T*'s answer!
+      </button>
+
+      <div class="answer" id="answer">
+        <p><strong>Ground Truth:</strong> In the left glass door on the shelf above the sink</p>
+        <p><strong>T*'s Answer:</strong> </p>
+        <!-- You can replace or remove the above answers as needed -->
+      </div>
+    </div>
+    <!-- End of Object Size Section -->
+
+</body>
+<script src="assets/js/full_screen_video.js"></script>
+<script src="assets/js/carousel.js"></script>
+
+<!-- Script to toggle answer visibility -->
+<script>
+  const toggleBtn = document.getElementById('toggleAnswer');
+  const answerBox = document.getElementById('answer');
+
+  toggleBtn.addEventListener('click', () => {
+    if (answerBox.style.display === 'none' || answerBox.style.display === '') {
+      answerBox.style.display = 'block';
+      toggleBtn.textContent = 'Hide Answer';
+    } else {
+      answerBox.style.display = 'none';
+      toggleBtn.textContent = 'Click to view Ground Truth and MLLM\'s answer!';
+    }
+  });
+</script>
+</html>
