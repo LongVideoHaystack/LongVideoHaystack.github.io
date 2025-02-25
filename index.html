@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LV-Haystack</title>
     <style>
-        body {
-          font-family: Arial, sans-serif;
-          background: #f9f9f9;
-          /* 整体字体稍微缩小 */
-          font-size: 14px;
-        }
+        
+body {
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
         .infographic-container {
           display: flex;
           flex-wrap: wrap;
@@ -279,56 +281,301 @@
           background-color: #f9f9f9;
         }
 
+        /* ---------------------------------- */
+        /* NEW STYLES FOR DATASET VIEWER      */
+        /* ---------------------------------- */
+        .dataset-viewer {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .dataset-title {
+            color: #4E2A84;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            background-color: #000;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            position: relative;
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0,0,0,0.7);
+            padding: 10px;
+            color: white;
+        }
+        
+        .play-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .timeline {
+            flex-grow: 1;
+            margin: 0 15px;
+            height: 5px;
+            background-color: #555;
+            position: relative;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .timeline-progress {
+            position: absolute;
+            height: 100%;
+            background-color: #4E2A84;
+            border-radius: 5px;
+            width: 50%;
+        }
+        
+        .time-display {
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        
+        .fullscreen-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        .question-section {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .question-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4E2A84;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .option-radio {
+            margin-bottom: 5px;
+        }
+        
+        .option-label {
+            font-weight: bold;
+        }
+        
+        .dataset-reveal-button {
+            background-color: #4E2A84;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            margin: 20px auto;
+        }
+        
+        .dataset-reveal-button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        
+        .answer-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border-left: 5px solid #4E2A84;
+        }
+        
+        .keyframe-section {
+            margin-top: 15px;
+        }
+        
+        .keyframe-title {
+            font-weight: bold;
+            color: #4E2A84;
+            margin-bottom: 10px;
+        }
+        
+        .keyframe-image {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .answer-section {
+            margin-top: 20px;
+        }
+        
+        .answer-title {
+            font-weight: bold;
+            color: #4E2A84;
+            margin-bottom: 10px;
+        }
+        
+        .ground-truth, .mllm-answer {
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .dataset-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .nav-button {
+            background-color: #4E2A84;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .nav-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .dataset-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #4E2A84;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 10;
+        }
     </style>
     <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="[[ICON_PNG]]">
-    <link rel="icon" type="image/png" sizes="32x32" href="[[ICON_PNG]]">
-    <link rel="icon" type="image/png" sizes="16x16" href="[[ICON_PNG]]">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/icon.png">
     <link rel="manifest" href="/site.webmanifest">
 
     <meta property="og:type" content="website"/>
-    <meta property="og:image" content="[[ICON_PNG]]"/>
+    <meta property="og:image" content="assets/img/icon.png"/>
     <meta property="og:image:type" content="image/png">
-    <meta property="og:url" content="[[OG_URL]]"/>
-    <meta property="og:title" content="[[OG_TITLE]]"/>
-    <meta property="og:description" content="[[OG_DESCRIPTION]]"/>
+    <meta property="og:url" content="https://lv-haystack.github.io/"/>
+    <meta property="og:title" content="LV-Haystack: Re-thinking Temporal Search for Long-Form Video Understanding"/>
+    <meta property="og:description" content="Introducing T* and LV-Haystack, the latest advancements in Vision-Language Models for Comprehensive Long Video Understanding"/>
 
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="[[TWITTER_TITLE]]"/>
-    <meta name="twitter:description" content="[[TWITTER_DESCRIPTION]]"/>
-    <meta name="twitter:creator" content="[[TWITTER_CREATOR]]"/>
+    <meta name="twitter:title" content="LV-Haystack: Temporal Search for Long-Form Video Understanding"/>
+    <meta name="twitter:description" content="Introducing T* and LV-Haystack for efficient long-form video understanding"/>
+    <meta name="twitter:creator" content="@lvhaystack"/>
 
     <meta name="twitter:label1" content="Published at"/>
-    <meta name="twitter:data1" content="[[PUBLISHED_AT]]"/>
+    <meta name="twitter:data1" content="February 2025"/>
     <meta name="twitter:label2" content="Reading time"/>
-    <meta name="twitter:data2" content="[[READING_TIME]]"/>
+    <meta name="twitter:data2" content="5 minutes"/>
 </head>
 <body>
-<!-- <div class="full-page-image">
-    <video id="bg-video" autoplay loop muted playsinline>
-        <source src="/Users/sunhaosen/Desktop/LV-Haystack/assets/img/Demo_0108_v3.mp4" type="video/mp4">
-    </video>
-    <div class="overlay"></div>
-    <div class="content" style="padding: 0 20px">
-        <h1>Re-thinking Temporal Search for Long-Form Video Understanding</h1>
-        <p>[[MAIN_SUBTEXT]]</p>
-    </div>
-</div> -->
-<div class="full-page-image">
+
+<div style="max-width: 90%; margin: 20px auto; background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
     <video
+      id="mainVideo"
       src="assets/videos/main.mp4"
       autoplay
       loop
       muted
       playsinline
-      style="width: 100%; height: 100%; object-fit: cover;"
+      style="width: 100%; height: auto; display: block; object-fit: contain; max-height: 80vh; background-color: white;"
     ></video>
-    <div class="overlay"></div>
-    <div class="content" style="padding: 0 20px">
-        <h1>Needle-in-Haystack in LongVideo Understanding</h1>
-        <p>Re-thinking Temporal Search for Long-Form Video Understanding</p>
+    <div id="videoTitle" class="content" style="padding: 20px; position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; background-color: rgba(255,255,255,0.8); opacity: 1; transition: opacity 2s;">
+        <h1 style="margin-bottom: 8px; color: #4E2A84;">Needle-in-Haystack in LongVideo Understanding</h1>
+        <p style="color: #555;"> —— Re-thinking Temporal Search for Long-Form Video Understanding</p>
     </div>
 </div>
+
+<script>
+  // Make the title fade out after a few seconds
+  document.addEventListener('DOMContentLoaded', function() {
+    const videoTitle = document.getElementById('videoTitle');
+    const mainVideo = document.getElementById('mainVideo');
+    
+    // Start the fade out after video has played for 5 seconds
+    setTimeout(function() {
+      videoTitle.style.opacity = '0';
+    }, 5000);
+    
+    // When video is reset (looped), show the title again
+    mainVideo.addEventListener('seeked', function() {
+      // If the video is close to the beginning (within 0.5 seconds)
+      if (mainVideo.currentTime < 0.5) {
+        videoTitle.style.opacity = '1';
+        
+        // And fade it out again after 5 seconds
+        setTimeout(function() {
+          videoTitle.style.opacity = '0';
+        }, 5000);
+      }
+    });
+  });
+</script>
 
 <div id="title_slide">
     <div class="title_left">
@@ -356,11 +603,11 @@
         </p>
         <br>
         <div class="button-container">
-            <a href="[[LINK]]" target="_blank" class="button"><i class="ai ai-arxiv"></i>&emsp14;arXiv</a>
+            <a href="#" target="_blank" class="button"><i class="ai ai-arxiv"></i>&emsp14;arXiv</a>
             <a href="assets/pdf/5448_Re_thinking_Temporal_Sear.pdf" target="_blank" class="button"><i class="fa-light fa-file"></i>&emsp14;PDF</a>
-            <a href="[[LINK]]" target="_blank" class="button"><i
+            <a href="#" target="_blank" class="button"><i
                     class="fa-brands fa-x-twitter"></i>&emsp14;tl;dr</a>
-            <a href="[[LINK]]" target="_blank" class="button"><i
+            <a href="https://github.com/LongVideoHaystack/TStar" target="_blank" class="button"><i
                     class="fa-light fa-code"></i>&emsp14;Code</a>
             <a href="http://mll-4090-3.cs.northwestern.edu:8082/" target="_blank" class="button"><i
                     class="fa-light fa-robot-astromech"></i>&emsp14;Demo</a>
@@ -407,7 +654,7 @@
         <div id="overview">
             <h1>Abstract</h1>
             <p>
-                We introduce the “Long Video Haystack” task: finding a minimal set of relevant frames (one to five) from tens of thousands of frames for given queries. We provide LV-HAYSTACK, a new benchmark of 3,874 human-annotated instances with fine-grained metrics for keyframe search quality and efficiency. Current methods only achieve a 2.1% temporal F1 score on its LVBENCH subset, highlighting a large gap.
+                We introduce the "Long Video Haystack" task: finding a minimal set of relevant frames (one to five) from tens of thousands of frames for given queries. We provide LV-HAYSTACK, a new benchmark of 3,874 human-annotated instances with fine-grained metrics for keyframe search quality and efficiency. Current methods only achieve a 2.1% temporal F1 score on its LVBENCH subset, highlighting a large gap.
             <p>
                 To address this, we propose <em>T*</em>, a lightweight keyframe search framework that reframes expensive temporal search as a spatial search. <em>T*</em> leverages image-based visual localization capabilities and introduces adaptive zooming-in across temporal and spatial dimensions. Under a 32-frame inference budget, <em>T*</em> boosts GPT-4o's performance from 50.5% to <strong>53.1%</strong>, and LLaVA-OneVision-OV-72B's from 55.5% to <strong>62.4%</strong> on the LongVideoBench XL subset.              
             <p>
@@ -469,35 +716,38 @@
         </div>
     </div>
 
-    <h1>LV-HAYSTACK Data</h1>
-    
-    <div class="infographic-wrapper">
-        <div class="infographic-container">
+    <!-- LV-HAYSTACK Data Section -->
+    <div id="lv-haystack-data">
+        <h1>LV-HAYSTACK Data</h1>
+        
+        <div class="infographic-container" style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin: 30px auto;">
             
-            <!-- 卡片1：Haystack-Ego4D -->
-            <div class="info-card">
-            <img src="assets/logos/DALL1.png" alt="Ego Icon">
-            <div class="info-title">HAYSTACK-EGO4D</div>
-            <div class="info-subtitle">Egocentric</div>
-            <p><strong>video</strong>: 244</p>
-            <p><strong>length</strong>: 101.1 h (~24.8 min/video)</p>
-            <p><strong>frame</strong>: 10,910,850 (~44,717/video)</p>
-            <p><strong>QA pair</strong>: 3,874 (~15.9/video)</p>
-            <p><strong>keyframe</strong>: 18,370 (~4.7/question)</p>
+            <!-- Card 1: Haystack-Ego4D -->
+            <div class="info-card" style="background: #fff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 300px; padding: 20px; text-align: left;">
+                <img src="assets/logos/DALL1.png" alt="Ego Icon" style="display: block; margin: 0 auto 8px; width: 40px; height: 40px; object-fit: contain;">
+                <div class="info-title" style="margin: 8px 0 4px; font-size: 16px; font-weight: bold; text-align: center;">HAYSTACK-EGO4D</div>
+                <div class="info-subtitle" style="color: #777; margin-bottom: 10px; font-size: 14px; text-align: center;">Egocentric</div>
+                
+                <p style="margin: 4px 0; color: #555;"><strong>video</strong>: 244</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>length</strong>: 101.1 h (~24.8 min/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>frame</strong>: 10,910,850 (~44,717/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>QA pair</strong>: 3,874 (~15.9/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>keyframe</strong>: 18,370 (~4.7/question)</p>
             </div>
-    
-            <!-- 卡片2：Haystack-LVBench -->
-            <div class="info-card">
-            <img src="assets/logos/DALL2.png" alt="Allocentric Icon">
-            <div class="info-title">HAYSTACK-LVBENCH</div>
-            <div class="info-subtitle">Allocentric</div>
-            <p><strong>video</strong>: 246</p>
-            <p><strong>length</strong>: 57.7 h (~14.1 min/video)</p>
-            <p><strong>frame</strong>: 4,701,551 (~19,112/video)</p>
-            <p><strong>QA pair</strong>: 602 (~2.4/video)</p>
-            <p><strong>keyframe</strong>: 1,071 (~1.8/question)</p>
+
+            <!-- Card 2: Haystack-LVBench -->
+            <div class="info-card" style="background: #fff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 300px; padding: 20px; text-align: left;">
+                <img src="assets/logos/DALL2.png" alt="Allocentric Icon" style="display: block; margin: 0 auto 8px; width: 40px; height: 40px; object-fit: contain;">
+                <div class="info-title" style="margin: 8px 0 4px; font-size: 16px; font-weight: bold; text-align: center;">HAYSTACK-LVBENCH</div>
+                <div class="info-subtitle" style="color: #777; margin-bottom: 10px; font-size: 14px; text-align: center;">Allocentric</div>
+                
+                <p style="margin: 4px 0; color: #555;"><strong>video</strong>: 246</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>length</strong>: 57.7 h (~14.1 min/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>frame</strong>: 4,701,551 (~19,112/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>QA pair</strong>: 602 (~2.4/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>keyframe</strong>: 1,071 (~1.8/question)</p>
             </div>
-    
+            
         </div>
     </div>
     <h1>Evaluations on Search Utility and Efficiency</h1>
@@ -521,67 +771,429 @@
         </div>
     </div>
 
+    <!-- ADDING THE INTERACTIVE DATASET VIEWER SECTION HERE -->
+    <h1>Dataset Examples</h1>
+    <div style="margin: 0 auto;">
+        <p>Explore examples from our LV-Haystack dataset and see how our method identifies the needle in the haystack.</p>
+    </div>
+
+    <div class="dataset-viewer" style="max-width: 600px; margin: 40px auto;">
+        <div class="dataset-navigation">
+            <button id="prevExample" class="nav-button" disabled>&larr; Previous Example</button>
+            <span id="exampleCounter">Example 1 of 11</span>
+            <button id="nextExample" class="nav-button">Next Example &rarr;</button>
+        </div>
+        
+        <div class="video-container">
+            <div class="dataset-label" id="datasetType">HAYSTACK-EGO4D</div>
+            <div class="video-placeholder" id="videoPlaceholder">
+                <video id="previewVideo" src="assets/videos/example1.mp4" controls style="width:100%; background: #333;" poster="assets/img/video_preview1.jpg">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        
+        <div class="question-section">
+            <div class="question-title">Question:</div>
+            <div class="question-text" id="currentQuestion">Measuring from the closest point of each object, which of these objects (table, stool, sofa, stove) is the closest to the TV?</div>
+            
+            <div class="options-container" id="optionsContainer">
+                <div class="option">
+                    <input type="radio" id="optionA" name="answer" class="option-radio">
+                    <label for="optionA" class="option-label">A. Table</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="optionB" name="answer" class="option-radio">
+                    <label for="optionB" class="option-label">B. Stool</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="optionC" name="answer" class="option-radio" checked>
+                    <label for="optionC" class="option-label">C. Sofa</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="optionD" name="answer" class="option-radio">
+                    <label for="optionD" class="option-label">D. Stove</label>
+                </div>
+            </div>
+            
+            <button id="revealButton" class="dataset-reveal-button">
+                <img src="assets/img/icon_1.png" alt="icon" width="24" height="24">
+                Click to view Human-anotated Keyframes and Ground-truth Answer!
+            </button>
+            
+            <div id="answerContainer" class="answer-container">
+                <div class="keyframe-section">
+                    <div class="keyframe-title">Keyframe (Needle in Haystack):</div>
+                    
+                    <!-- Keyframe Slider Container -->
+                    <div class="keyframe-slider-container" style="position: relative; margin: 20px 0;">
+                        <div class="keyframe-slider" style="display: flex; overflow-x: hidden; scroll-behavior: smooth; border-radius: 8px; background: #f0f0f0; position: relative;">
+                            <img class="keyframe-slide" src="assets/img/keyframe1.jpg" alt="Key Frame 1" style="min-width: 100%; height: auto; object-fit: contain;">
+                            <img class="keyframe-slide" src="assets/img/keyframe2.jpg" alt="Key Frame 2" style="min-width: 100%; height: auto; object-fit: contain;">
+                            <img class="keyframe-slide" src="assets/img/keyframe3.jpg" alt="Key Frame 3" style="min-width: 100%; height: auto; object-fit: contain;">
+                        </div>
+                        <!-- Slider Navigation Arrows -->
+                        <button class="keyframe-prev" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(78, 42, 132, 0.7); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; cursor: pointer; z-index: 2;">&lt;</button>
+                        <button class="keyframe-next" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(78, 42, 132, 0.7); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; cursor: pointer; z-index: 2;">&gt;</button>
+                        
+                        <!-- Dots Indicator -->
+                        <div class="keyframe-dots" style="display: flex; justify-content: center; margin-top: 10px;">
+                            <span class="keyframe-dot active" style="height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block; margin: 0 5px; cursor: pointer;"></span>
+                            <span class="keyframe-dot" style="height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block; margin: 0 5px; cursor: pointer;"></span>
+                            <span class="keyframe-dot" style="height: 10px; width: 10px; background-color: #bbb; border-radius: 50%; display: inline-block; margin: 0 5px; cursor: pointer;"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="answer-section">
+                    <div class="answer-title">Ground Truth Option:</div>
+                    <div class="ground-truth" id="groundTruth" style="background-color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        The sofa is the closest object to the TV, as seen in the keyframe.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <h1>Conclusion</h1>
-    <div style="text-align: justify;">
+    <div style="text-align: justify; margin: 0 auto;">
         <p>
-            We revisit temporal search for long-form video understanding, focusing on a core challenge for state-of-the-art (SOTA) long-context vision-language models (VLMs). First, we formalize temporal search as a “Long Video Haystack” problem: finding a minimal set of relevant frames (among tens of thousands) given specific queries. To validate this, we introduce <strong>LV-HAYSTACK</strong>, featuring 3,874 human-annotated instances and fine-grained evaluation metrics for keyframe search quality and efficiency. Experimental results on <strong>LV-HAYSTACK</strong> reveal a significant gap in temporal search capabilities under SOTA keyframe selection methods. We further propose a lightweight keyframe searching framework, <em>T*</em>, reframing the costly temporal search into a spatial search task. Extensive experiments show that integrating <em>T*</em> into existing methods significantly boosts SOTA performance. We hope <strong>LV-HAYSTACK</strong> and <em>T*</em> will foster impactful algorithmic advances for efficient long-form video understanding.
+            We revisit temporal search for long-form video understanding, focusing on a core challenge for state-of-the-art (SOTA) long-context vision-language models (VLMs). First, we formalize temporal search as a "Long Video Haystack" problem: finding a minimal set of relevant frames (among tens of thousands) given specific queries. To validate this, we introduce <strong>LV-HAYSTACK</strong>, featuring 3,874 human-annotated instances and fine-grained evaluation metrics for keyframe search quality and efficiency. Experimental results on <strong>LV-HAYSTACK</strong> reveal a significant gap in temporal search capabilities under SOTA keyframe selection methods. We further propose a lightweight keyframe searching framework, <em>T*</em>, reframing the costly temporal search into a spatial search task. Extensive experiments show that integrating <em>T*</em> into existing methods significantly boosts SOTA performance. We hope <strong>LV-HAYSTACK</strong> and <em>T*</em> will foster impactful algorithmic advances for efficient long-form video understanding.
         </p>
     </div>
 
-<!--     <h1>Acknowledgement</h1>
-    <p>[[ACKNOWLEDGEMENT_CONTENT]]</p> -->
+    <h1>Acknowledgement</h1>
+    <div style="text-align: justify; margin: 0 auto;">
+        <p>This research is supported in part by the Stanford HAI Hoffman-Yee grant, Stanford Institute for Human-Centered AI (HAI), the NSF grant 2131111, 2211258, and the DARPA MCS program under Cooperative Agreement N66001-19-2-4032. We thank Kai Zhang for his valuable discussions, Medhini Narasimhan and Xiangyu Peng for their help with the website.</p>
+    </div>
 
     <h1>BibTeX</h1>
-    <p class="bibtex">[[BIBTEX_CONTENT]]</p>
-    <br>
+    <div style="max-width: 600px; margin: 0 auto;">
+        <pre style="font-size: 12px; background-color: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto; white-space: pre-wrap; word-break: break-all;">
 
-
-    <div class="object-size-container">
-      <h2>title!</h2>
-      <!-- <h3>Object Size</h3> -->
-      <div class="object-video-container">
-        <span class="label">where</span>
-        <!-- Replace 'chair_video.mp4' with your actual video source -->
-        <video width="600" height="320" controls>
-          <source src="assets/videos/51e04dae-3ad0-48c1-b94b-c3ba0edaa99e (online-video-cutter.com).mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <p style="margin-top: 5px; font-size: 12px; color: #666;">This video is playing at 4x speed. You can adjust the speed using the controls above.</p>
-      </div>
-
-      <div class="object-question">
-        Question: Where did I see the basket?
-      </div>
-
-      <button class="reveal-button" id="toggleAnswer">
-        Click to view Ground Truth and T*'s answer!
-      </button>
-
-      <div class="answer" id="answer">
-        <p><strong>Ground Truth:</strong> In the left glass door on the shelf above the sink</p>
-        <p><strong>T*'s Answer:</strong> </p>
-        <!-- You can replace or remove the above answers as needed -->
-      </div>
+        </pre>
     </div>
-    <!-- End of Object Size Section -->
+    <br>
 
 </body>
 <script src="assets/js/full_screen_video.js"></script>
 <script src="assets/js/carousel.js"></script>
 
-<!-- Script to toggle answer visibility -->
+<!-- Script for dataset viewer -->
 <script>
-  const toggleBtn = document.getElementById('toggleAnswer');
-  const answerBox = document.getElementById('answer');
-
-  toggleBtn.addEventListener('click', () => {
-    if (answerBox.style.display === 'none' || answerBox.style.display === '') {
-      answerBox.style.display = 'block';
-      toggleBtn.textContent = 'Hide Answer';
-    } else {
-      answerBox.style.display = 'none';
-      toggleBtn.textContent = 'Click to view Ground Truth and MLLM\'s answer!';
+    // Dataset examples
+    const datasetExamples = [
+        {
+            type: "HAYSTACK-EGO4D",
+            question: "Measuring from the closest point of each object, which of these objects (table, stool, sofa, stove) is the closest to the TV?",
+            options: ["Table", "Stool", "Sofa", "Stove"],
+            correctOption: 2, // 0-indexed, so 2 is "Sofa"
+            groundTruth: "The sofa is the closest object to the TV, as seen in the keyframe.",
+            keyframes: ["assets/img/keyframe1-1.jpg", "assets/img/keyframe1-2.jpg", "assets/img/keyframe1-3.jpg"],
+            videoSrc: "assets/videos/example1.mp4"
+        },
+        {
+            type: "HAYSTACK-LVBENCH",
+            question: "Where was the white trash can before I raised it?",
+            options: ["Kitchen", "Bathroom", "Living room", "Bedroom"],
+            correctOption: 1, // "Bathroom"
+            groundTruth: "The white trash can was in the bathroom before it was raised.",
+            keyframes: ["assets/img/keyframe2-1.jpg", "assets/img/keyframe2-2.jpg"],
+            videoSrc: "assets/videos/example2.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D",
+            question: "Who did I talk to in the living room?",
+            options: ["Mother", "Brother", "Friend", "Nobody"],
+            correctOption: 2, // "Friend"
+            groundTruth: "The person talked to a friend in the living room as shown in the video sequence.",
+            keyframes: ["assets/img/keyframe3-1.jpg", "assets/img/keyframe3-2.jpg", "assets/img/keyframe3-3.jpg", "assets/img/keyframe3-4.jpg"],
+            videoSrc: "assets/videos/example3.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D",
+            question: "What color is the book on the coffee table?",
+            options: ["Red", "Blue", "Green", "Black"],
+            correctOption: 1, // "Blue"
+            groundTruth: "The book on the coffee table is blue as shown in the keyframe.",
+            keyframes: ["assets/img/keyframe4-1.jpg", "assets/img/keyframe4-2.jpg"],
+            videoSrc: "assets/videos/example4.mp4"
+        },
+        {
+            type: "HAYSTACK-LVBENCH",
+            question: "What was placed on the kitchen counter after the groceries were unpacked?",
+            options: ["Fruit bowl", "Coffee machine", "Blender", "Nothing"],
+            correctOption: 0, // "Fruit bowl"
+            groundTruth: "A fruit bowl was placed on the kitchen counter after unpacking the groceries.",
+            keyframes: ["assets/img/keyframe5-1.jpg", "assets/img/keyframe5-2.jpg", "assets/img/keyframe5-3.jpg"],
+            videoSrc: "assets/videos/example5.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D",
+            question: "Which appliance was used first in the morning routine?",
+            options: ["Coffee maker", "Toaster", "Microwave", "Kettle"],
+            correctOption: 3, // "Kettle"
+            groundTruth: "The kettle was the first appliance used in the morning routine.",
+            keyframes: ["assets/img/keyframe6-1.jpg", "assets/img/keyframe6-2.jpg"],
+            videoSrc: "assets/videos/example6.mp4"
+        },
+        {
+            type: "HAYSTACK-LVBENCH",
+            question: "What was moved from the living room to the bedroom?",
+            options: ["Pillow", "Laptop", "Book", "Plant"],
+            correctOption: 1, // "Laptop"
+            groundTruth: "The laptop was moved from the living room to the bedroom.",
+            keyframes: ["assets/img/keyframe7-1.jpg", "assets/img/keyframe7-2.jpg", "assets/img/keyframe7-3.jpg"],
+            videoSrc: "assets/videos/example7.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D",
+            question: "What color was the car that passed by the window?",
+            options: ["Red", "Blue", "Silver", "White"],
+            correctOption: 2, // "Silver"
+            groundTruth: "A silver car passed by the window as seen in the keyframe.",
+            keyframes: ["assets/img/keyframe8-1.jpg", "assets/img/keyframe8-2.jpg"],
+            videoSrc: "assets/videos/example8.mp4"
+        },
+        {
+            type: "HAYSTACK-LVBENCH",
+            question: "How many people sat at the dining table during dinner?",
+            options: ["Two", "Three", "Four", "Five"],
+            correctOption: 2, // "Four"
+            groundTruth: "Four people sat at the dining table during dinner.",
+            keyframes: ["assets/img/keyframe9-1.jpg", "assets/img/keyframe9-2.jpg"],
+            videoSrc: "assets/videos/example9.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D",
+            question: "What was placed in the refrigerator first?",
+            options: ["Milk", "Vegetables", "Leftovers", "Juice"],
+            correctOption: 0, // "Milk"
+            groundTruth: "Milk was the first item placed in the refrigerator.",
+            keyframes: ["assets/img/keyframe10-1.jpg", "assets/img/keyframe10-2.jpg", "assets/img/keyframe10-3.jpg"],
+            videoSrc: "assets/videos/example10.mp4"
+        },
+        {
+            type: "HAYSTACK-LVBENCH",
+            question: "What was hanging on the wall behind the sofa?",
+            options: ["Clock", "Painting", "Mirror", "Calendar"],
+            correctOption: 1, // "Painting"
+            groundTruth: "A painting was hanging on the wall behind the sofa.",
+            keyframes: ["assets/img/keyframe11-1.jpg", "assets/img/keyframe11-2.jpg"],
+            videoSrc: "assets/videos/example11.mp4"
+        }
+    ];
+    
+    let currentExampleIndex = 0;
+    let currentKeyframeIndex = 0;
+    
+    // DOM elements
+    const prevButton = document.getElementById('prevExample');
+    const nextButton = document.getElementById('nextExample');
+    const exampleCounter = document.getElementById('exampleCounter');
+    const datasetTypeLabel = document.getElementById('datasetType');
+    const questionText = document.getElementById('currentQuestion');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const revealButton = document.getElementById('revealButton');
+    const answerContainer = document.getElementById('answerContainer');
+    const groundTruthElement = document.getElementById('groundTruth');
+    const videoElement = document.getElementById('previewVideo');
+    
+    // Load example data
+    function loadExample(index) {
+        const example = datasetExamples[index];
+        
+        // Update dataset type
+        datasetTypeLabel.textContent = example.type;
+        
+        // Update question
+        questionText.textContent = example.question;
+        
+        // Update options
+        const optionLabels = document.querySelectorAll('.option-label');
+        const optionInputs = document.querySelectorAll('.option-radio');
+        
+        optionLabels.forEach((label, i) => {
+            label.textContent = `${String.fromCharCode(65 + i)}. ${example.options[i]}`;
+        });
+        
+        optionInputs.forEach((input, i) => {
+            input.checked = (i === example.correctOption);
+        });
+        
+        // Update answers
+        groundTruthElement.textContent = example.groundTruth;
+        
+        // Hide answer container
+        answerContainer.style.display = 'none';
+        
+        // Update counter
+        exampleCounter.textContent = `Example ${index + 1} of ${datasetExamples.length}`;
+        
+        // Update navigation buttons
+        prevButton.disabled = (index === 0);
+        nextButton.disabled = (index === datasetExamples.length - 1);
+        
+        // Update video
+        videoElement.src = example.videoSrc;
+        videoElement.poster = `assets/img/video_preview${index + 1}.jpg`;
+        videoElement.load(); // Reload the video with new source
+        
+        // Update keyframe carousel
+        updateKeyframeCarousel(example.keyframes);
+        
+        // Update button text
+        revealButton.innerHTML = '<img src="assets/img/icon_1.png" alt="icon" width="24" height="24">Click to view Human-anotated Keyframes and Ground-truth Answer!';
     }
-  });
+    
+    // Update keyframe carousel
+    function updateKeyframeCarousel(keyframes) {
+        // Reset current keyframe index
+        currentKeyframeIndex = 0;
+        
+        // Get the slider container
+        const sliderContainer = document.querySelector('.keyframe-slider');
+        const dotsContainer = document.querySelector('.keyframe-dots');
+        
+        // Clear existing content
+        sliderContainer.innerHTML = '';
+        dotsContainer.innerHTML = '';
+        
+        // Add new keyframes
+        keyframes.forEach((src, index) => {
+            // Create slide
+            const slide = document.createElement('img');
+            slide.className = 'keyframe-slide';
+            slide.src = src;
+            slide.alt = `Key Frame ${index + 1}`;
+            slide.style.minWidth = '100%';
+            slide.style.height = 'auto';
+            slide.style.objectFit = 'contain';
+            sliderContainer.appendChild(slide);
+            
+            // Create dot
+            const dot = document.createElement('span');
+            dot.className = index === 0 ? 'keyframe-dot active' : 'keyframe-dot';
+            dot.style.height = '10px';
+            dot.style.width = '10px';
+            dot.style.backgroundColor = index === 0 ? '#4E2A84' : '#bbb';
+            dot.style.borderRadius = '50%';
+            dot.style.display = 'inline-block';
+            dot.style.margin = '0 5px';
+            dot.style.cursor = 'pointer';
+            dot.onclick = function() { showKeyframe(index); };
+            dotsContainer.appendChild(dot);
+        });
+        
+        // Hide navigation buttons if only one keyframe
+        const prevBtn = document.querySelector('.keyframe-prev');
+        const nextBtn = document.querySelector('.keyframe-next');
+        const dotsDiv = document.querySelector('.keyframe-dots');
+        
+        if (keyframes.length <= 1) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            dotsDiv.style.display = 'none';
+        } else {
+            prevBtn.style.display = 'block';
+            nextBtn.style.display = 'block';
+            dotsDiv.style.display = 'flex';
+        }
+    }
+    
+    // Show specific keyframe
+    function showKeyframe(index) {
+        const slider = document.querySelector('.keyframe-slider');
+        const dots = document.querySelectorAll('.keyframe-dot');
+        const slides = document.querySelectorAll('.keyframe-slide');
+        
+        // Update current index
+        currentKeyframeIndex = index;
+        
+        // Update slider position
+        slider.scrollLeft = slides[index].offsetLeft;
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+            dot.style.backgroundColor = i === index ? '#4E2A84' : '#bbb';
+            dot.className = i === index ? 'keyframe-dot active' : 'keyframe-dot';
+        });
+    }
+    
+    // Move to next/previous keyframe
+    function nextKeyframe() {
+        const slides = document.querySelectorAll('.keyframe-slide');
+        if (currentKeyframeIndex < slides.length - 1) {
+            showKeyframe(currentKeyframeIndex + 1);
+        }
+    }
+    
+    function prevKeyframe() {
+        if (currentKeyframeIndex > 0) {
+            showKeyframe(currentKeyframeIndex - 1);
+        }
+    }
+    
+    // Add event listeners
+    prevButton.addEventListener('click', () => {
+        if (currentExampleIndex > 0) {
+            currentExampleIndex--;
+            loadExample(currentExampleIndex);
+        }
+    });
+    
+    nextButton.addEventListener('click', () => {
+        if (currentExampleIndex < datasetExamples.length - 1) {
+            currentExampleIndex++;
+            loadExample(currentExampleIndex);
+        }
+    });
+    
+    revealButton.addEventListener('click', () => {
+        if (answerContainer.style.display === 'none' || answerContainer.style.display === '') {
+            answerContainer.style.display = 'block';
+            revealButton.textContent = 'Hide Answer';
+        } else {
+            answerContainer.style.display = 'none';
+            revealButton.innerHTML = '<img src="assets/img/icon_1.png" alt="icon" width="24" height="24">Click to view Human-anotated Keyframes and Ground-truth Answer!';
+        }
+    });
+    
+    // Add keyframe navigation event listeners
+    document.querySelector('.keyframe-next').addEventListener('click', nextKeyframe);
+    document.querySelector('.keyframe-prev').addEventListener('click', prevKeyframe);
+    
+    // Initialize the first example
+    loadExample(currentExampleIndex);
+</script>
+
+<!-- Carousel script -->
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
 </script>
 </html>
