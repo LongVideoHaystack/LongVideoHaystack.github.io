@@ -318,7 +318,7 @@ body {
             align-items: center;
             background-color: #333;
             color: white;
-            font-size: 16px;
+            font-size: 14px;
             position: relative;
         }
         
@@ -366,7 +366,7 @@ body {
             background: none;
             border: none;
             color: white;
-            font-size: 18px;
+            font-size: 14px;
             cursor: pointer;
             margin-left: 10px;
         }
@@ -380,22 +380,33 @@ body {
         }
         
         .question-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #4E2A84;
             margin-bottom: 15px;
         }
         
         .question-text {
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 20px;
         }
         
         .options-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             margin-bottom: 20px;
+        }
+        .options-row-top {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .options-row-bottom {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
         }
         
         .option {
@@ -505,7 +516,7 @@ body {
             color: white;
             padding: 5px 10px;
             border-radius: 5px;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
             z-index: 10;
         }
@@ -543,7 +554,7 @@ body {
       loop
       muted
       playsinline
-      style="width: 100%; height: auto; display: block; object-fit: contain; max-height: 90vh; background-color: white;"
+      style="width: 100%; height: auto; display: block; object-fit: contain; max-height: 95vh; background-color: white;"
     ></video>
     <div id="videoTitle" class="content" style="padding: 20px; position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; background-color: rgba(255,255,255,0.8); opacity: 1; transition: opacity 2s;">
         <h1 style="margin-bottom: 8px; color: #4E2A84;">Needle-in-Haystack in LongVideo Understanding</h1>
@@ -622,7 +633,7 @@ body {
             <h3>&#x1F31F; Our Contributions:</h3>
             <br>
             <ul>
-                <li><strong>Lightweight Plugin:</strong> T* enhances LLaVA-OV-72B from 56% to 62% and GPT-4o from 50% to 53% using just 32 frames.</li>
+                <li><strong>Lightweight Plugin:</strong> T* framework that employs efficient temporal search for long-form video understanding, which enhances LLaVA-OV-72B from 56% to 62% and GPT-4o from 50% to 53% using just 32 frames.</li>
                 <li><strong>Faster Inference:</strong> Reduced latency from 34.9 seconds to 10.4 seconds and lowered computational demand from 691 TFLOPs to 170 TFLOPs compared to the previous state-of-the-art.</li>
                 <li><strong>Large-Scale Dataset:</strong> LV-Haystack includes 300 hours of video content and 11,000 samples.</li>
             </ul>
@@ -664,30 +675,28 @@ body {
 </div>
 <hr class="rounded">
 
-<div></div>
 
-
-<div style="text-align: center; margin-top: 20px;">
-    <img 
-      src="assets/img/image.png" 
-      alt="Sample Image" 
-      width="600px" 
-      style="display: block; margin: 0 auto;"
-    >
-    <div style="
-         width: 600px; 
-         margin: 5px auto 0 auto; 
-         text-align: left; 
-         color: #555;
-    ">
-      <p style="font-size: 10px; text-align: justify;">
-        <strong>Figure 1.</strong> Extrinsic evaluation results demonstrate how <em>T*</em> improves VLMs by selecting 8 keyframes (needle) from a large haystack, highlighting the significance of <strong>vision-centric search</strong>.
-      </p>
-    </div>
-  </div>
-  
 <div id="overview">
+    <div style="text-align: center; margin-top: 20px;">
+        <img 
+          src="assets/img/image.png" 
+          alt="Sample Image" 
+          width="600px" 
+          style="display: block; margin: 0 auto;"
+        >
+        <div style="
+             width: 600px; 
+             margin: 5px auto 0 auto; 
+             text-align: left; 
+             color: #555;
+        ">
+        </div>
+      </div>
+    <div style="text-align: left; color: #555;">
+        <p style="font-size: 10px;"><strong>Figure 1.</strong> Extrinsic evaluation results demonstrate how <em>T*</em> improves VLMs by selecting 8 keyframes (needle) from a large haystack, highlighting the significance of <strong>vision-centric search</strong>.</p>
+    </div>
     <h1>Method Overview</h1>
+    
     <div style="font-family: Arial, sans-serif; text-align: justify;">
         <p>
             <strong> <em>T*</em></strong> is an advanced temporal search framework designed to efficiently identify key frames relevant to specific queries.
@@ -697,9 +706,13 @@ body {
     </div>
 
     <div style="text-align: center; margin-top: 20px;">
-        <img src="assets/img/methodv10.png" alt="Diagram illustrating the methodology of the project" width="600px" height="250px">
+        <img src="assets/img/methodv10.png" alt="Diagram illustrating the methodology of the project" width="580px" height="240px">
         <div style="text-align: left; color: #555;">
-            <p style="font-size: 10px;"><strong>Figure 2.</strong> <em>T*</em> efficiently searches keyframes in long videos via adaptive temporal and spatial upsampling. First, a VLM identifies target cues from the question (Visual Grounding). Next, a Spatial Searching Model (e.g., YOLO-world) zooms in from coarse to fine frame distributions, avoiding exhaustive frame-by-frame scans. Finally, T* selects K keyframes for QA, serving as visual input to downstream VLMs.</p>
+            <p style="font-size: 10px;"><strong>Figure 2.</strong> 
+                <em>T*</em> employs an iterative temporal search approach to search keyframes essential to answer questions. 
+                Left: Question Grounding, where a visual language model identifies visual cues (target and cue object) from the textual question. 
+                Center: Iterative Temporal Search, formulated as Spatial Search where a spatial search model iteratively detects visual cues and upsamples relevant temporal/visual regions. 
+                Right: Downstream Task, where the visual language model answers questions using <em>K</em> keyframes sampled from the final temporal search distribution as visual input.</p>
         </div>
     </div>
     
@@ -712,11 +725,29 @@ body {
     <div style="text-align: center; margin-top: 20px;">
         <img src="assets/img/figure4.png" alt="Sample Image" width="600px" height="230px">
         <div style="text-align: justify; color: #555;">
-            <p style="font-size: 10px;"><strong>Table 1.</strong>  QA accuracy (%) of <em>T*</em> used as a frame selection module for VLMs on two long-form QA benchmarks: LongVideoBench and Video-MME (without subtitles for fairness). Top-performing models (in gray) often use many more frames, making comparisons less direct. Models are ranked by their XLong video performance on LongVideoBench and total score on Video-MME, with frame counts noted. All baseline numbers come from their respective publications.</p>
+            <p style="font-size: 10px;"><strong>Table 1.</strong> Downstream task evaluation results show <em>T*</em> effectiveness as a temporal search module for VLMs on LongVideoBench and Video-MME (without subtitles for fair comparison). Using QA accuracy (%) as the metric, we compare with top leaderboard models (shown in gray), noting these typically use substantially more frames, making direct comparisons challenging. Models are ranked by XLong video performance on LongVideoBench and total score on Video-MME, with frame counts indicated. All baseline figures are directly cited from their original publications.</p>
         </div>
     </div>
-
+    
+    <h1>Evaluations on Search Utility and Efficiency</h1>
+    <p>We explore disentangled evaluation of temporal search & video understanding with 6 fine-grained search metrics.
+    </p>
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="assets/img/table2.png" alt="Sample Image" width="600px" height="180px">
+        <div style="text-align: justify; color: #555;">
+            <p style="font-size: 10px;"><strong>Table 2.</strong> Efficiency results on the full LV-HAYSTACK, including search efficiency and overall (search+downstream) efficiency. We report the search models used and their avg. call frequency (e.g., VideoAgent calls GPT-4 four times for grounding). 
+                <em>T*</em> achieves high performance with significantly less computation and lower latency. VideoAgent's FLOPs (†) exclude GPT-4 costs due to its closed-source nature.</p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="assets/img/table3.png" alt="Sample Image" width="600px" height="220px">
+        <div style="text-align: justify; color: #555;">
+            <p style="font-size: 10px;"><strong>Table 3.</strong> Search utility results on LV-HAYSTACK. 8-frame setting bests are <u>underlined</u>, 32-frame setting bests are in <strong>bold</strong>. We show that more searched frames consistently improves recall but reduces precision in retrieval methods. Detector-based <em>T*</em> achieves best performance in 32-frame setting across metrics, demonstrating the effectiveness of visual grounding and iterative temporal search. Attention-based <em>T*</em> performs well in 8-frame setting but requires larger foundation models, thereby reducing efficiency.</p>
+        </div>
+    </div>
+    
     <!-- LV-HAYSTACK Data Section -->
+
     <div id="lv-haystack-data">
         <h1>LV-HAYSTACK Data</h1>
         
@@ -728,11 +759,11 @@ body {
                 <div class="info-title" style="margin: 8px 0 4px; font-size: 16px; font-weight: bold; text-align: center;">HAYSTACK-EGO4D</div>
                 <div class="info-subtitle" style="color: #777; margin-bottom: 10px; font-size: 14px; text-align: center;">Egocentric</div>
                 
-                <p style="margin: 4px 0; color: #555;"><strong>video</strong>: 244</p>
-                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>length</strong>: 101.1 h (~24.8 min/video)</p>
-                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>frame</strong>: 10,910,850 (~44,717/video)</p>
-                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>QA pair</strong>: 3,874 (~15.9/video)</p>
-                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>keyframe</strong>: 18,370 (~4.7/question)</p>
+                <p style="margin: 4px 0; color: #555;"><strong>video</strong>: 988</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>length</strong>: 423 h (~25.7 min/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>frame</strong>: 45,700,000 (~46,300/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>QA pair</strong>: 15,092 (~15.3/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>keyframe</strong>: 28,300 (~1.9/question)</p>
             </div>
 
             <!-- Card 2: Haystack-LVBench -->
@@ -743,38 +774,18 @@ body {
                 
                 <p style="margin: 4px 0; color: #555;"><strong>video</strong>: 246</p>
                 <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>length</strong>: 57.7 h (~14.1 min/video)</p>
-                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>frame</strong>: 4,701,551 (~19,112/video)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>frame</strong>: 4,700,000 (~19,100/video)</p>
                 <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>QA pair</strong>: 602 (~2.4/video)</p>
-                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>keyframe</strong>: 1,071 (~1.8/question)</p>
+                <p style="margin: 4px 0; color: #555; white-space: nowrap;"><strong>keyframe</strong>: 1,070 (~1.8/question)</p>
             </div>
             
-        </div>
-    </div>
-    <h1>Evaluations on Search Utility and Efficiency</h1>
-    <p>We explore disentangled evaluation of temporal search & video understanding with 6 fine-grained search metrics.
-    </p>
-    <div style="text-align: center; margin-top: 20px;">
-        <img src="assets/img/table2.png" alt="Sample Image" width="600px" height="180px">
-        <div style="text-align: justify; color: #555;">
-            <p style="font-size: 10px;"><strong>Table 2.</strong> Search efficiency results on LV-HAYSTACK, covering both searching and overall video-understanding performance. Unless noted (e.g., Uniform-32), 8 frames are used for LLaVA-OneVision-72B QA. We report the model plus average call turns for grounding and matching (e.g., VideoAgent calls GPT-4 four times). <em>T*</em> achieves strong QA with minimal search cost, demonstrating efficient long-form video understanding. <sup>†</sup>FLOPs for VideoAgent exclude GPT-4 costs, due to its closed-source nature.</p>
-        </div>
-    </div>
-    <div style="text-align: center; margin-top: 20px;">
-        <img src="assets/img/table3.png" alt="Sample Image" width="600px" height="220px">
-        <div style="text-align: justify; color: #555;">
-            <p style="font-size: 10px;"><strong>Table 3.</strong> Searching utility on LV-HAYSTACK. The best 8-frame results are 
-                <u>underlined</u>, while the best 32-frame results are <strong>bold</strong>. Increasing 
-                searched frames improves recall but reduces precision (e.g., in retrieval methods). 
-                Detector-based <em>T*</em> leads the 32-frame setting across multiple metrics, demonstrating 
-                visual grounding plus iterative temporal searching. Although attention-based <em>T*</em> 
-                performs well at 8 frames, it relies on larger foundation models, impacting efficiency.</p>
         </div>
     </div>
 
     <!-- ADDING THE INTERACTIVE DATASET VIEWER SECTION HERE -->
     <h1>Dataset Examples</h1>
     <div style="margin: 0 auto;">
-        <p>Explore examples from our LV-Haystack dataset and see how our method identifies the needle in the haystack.</p>
+        <p>Explore examples from our LV-Haystack dataset. <em>(Note: The video shown in the current interface is not the original dataset video length; it has been clipped to a segment close to the target frame.)</em></p>
     </div>
 
     <div class="dataset-viewer" style="max-width: 600px; margin: 40px auto;">
@@ -790,6 +801,9 @@ body {
                 <video id="previewVideo" src="assets/videos/example1.mp4" controls style="width:100%; background: #333;" poster="assets/img/video_preview1.jpg">
                     Your browser does not support the video tag.
                 </video>
+                <div style="position: absolute; bottom: 0px; left: 0; right: 0; text-align: center; background-color: rgba(48, 47, 47, 0.6); color: white; padding: 5px; font-size: 14px;">
+                    Video plays at 4x speed by default
+                </div>
             </div>
         </div>
         
@@ -797,22 +811,30 @@ body {
             <div class="question-title">Question:</div>
             <div class="question-text" id="currentQuestion">Measuring from the closest point of each object, which of these objects (table, stool, sofa, stove) is the closest to the TV?</div>
             
-            <div class="options-container" id="optionsContainer">
-                <div class="option">
-                    <input type="radio" id="optionA" name="answer" class="option-radio">
-                    <label for="optionA" class="option-label">A. Table</label>
+            <div class="options-container">
+                <div class="options-row-top">
+                    <div class="option">
+                        <input type="radio" id="optionA" name="answer" class="option-radio">
+                        <label for="optionA" class="option-label">A. Table</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="optionB" name="answer" class="option-radio">
+                        <label for="optionB" class="option-label">B. Stool</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="optionC" name="answer" class="option-radio" checked>
+                        <label for="optionC" class="option-label">C. Sofa</label>
+                    </div>
                 </div>
-                <div class="option">
-                    <input type="radio" id="optionB" name="answer" class="option-radio">
-                    <label for="optionB" class="option-label">B. Stool</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="optionC" name="answer" class="option-radio" checked>
-                    <label for="optionC" class="option-label">C. Sofa</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="optionD" name="answer" class="option-radio">
-                    <label for="optionD" class="option-label">D. Stove</label>
+                <div class="options-row-bottom">
+                    <div class="option">
+                        <input type="radio" id="optionD" name="answer" class="option-radio">
+                        <label for="optionD" class="option-label">D. Stove</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="optionE" name="answer" class="option-radio">
+                        <label for="optionE" class="option-label">E. Shelf</label>
+                    </div>
                 </div>
             </div>
             
@@ -823,7 +845,7 @@ body {
             
             <div id="answerContainer" class="answer-container">
                 <div class="keyframe-section">
-                    <div class="keyframe-title">Keyframe (Needle in Haystack):</div>
+                    <div class="keyframe-title">Keyframes (Needle in Haystack):</div>
                     
                     <!-- Keyframe Slider Container -->
                     <div class="keyframe-slider-container" style="position: relative; margin: 20px 0;">
@@ -846,7 +868,7 @@ body {
                 </div>
                 
                 <div class="answer-section">
-                    <div class="answer-title">Ground Truth Option:</div>
+                    <div class="answer-title">Ground Truth:</div>
                     <div class="ground-truth" id="groundTruth" style="background-color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                         The sofa is the closest object to the TV, as seen in the keyframe.
                     </div>
@@ -884,101 +906,101 @@ body {
     // Dataset examples
     const datasetExamples = [
         {
-            type: "HAYSTACK-EGO4D",
-            question: "Measuring from the closest point of each object, which of these objects (table, stool, sofa, stove) is the closest to the TV?",
-            options: ["Table", "Stool", "Sofa", "Stove"],
-            correctOption: 2, // 0-indexed, so 2 is "Sofa"
-            groundTruth: "The sofa is the closest object to the TV, as seen in the keyframe.",
-            keyframes: ["assets/img/keyframe1-1.jpg", "assets/img/keyframe1-2.jpg", "assets/img/keyframe1-3.jpg"],
-            videoSrc: "assets/videos/example1.mp4"
+            type: "HAYSTACK-EGO4D-train-51e04dae",
+            question: "In what location did i see the basket?",
+            options: ["In the left glass door of the shelf above the sink", "Next to the stove", "On the right side of the sink", "Inside the cabinet under the sink", "On top of the refrigerator"],
+            correctOption: 0, // "In the left glass door of the shelf above the sink"
+            groundTruth: "In the left glass door of the shelf above the sink",
+            keyframes: ["assets/img/data/1_frame_1841.png", "assets/img/data/1_frame_1921.png"],
+            videoSrc: "assets/videos/processed_videos/4x_51e04dae-3ad0-48c1-b94b-c3ba0edaa99e.mp4"
         },
         {
-            type: "HAYSTACK-LVBENCH",
-            question: "Where was the white trash can before I raised it?",
-            options: ["Kitchen", "Bathroom", "Living room", "Bedroom"],
-            correctOption: 1, // "Bathroom"
-            groundTruth: "The white trash can was in the bathroom before it was raised.",
-            keyframes: ["assets/img/keyframe2-1.jpg", "assets/img/keyframe2-2.jpg"],
-            videoSrc: "assets/videos/example2.mp4"
+            type: "HAYSTACK-EGO4D-train-51e04dae",
+            question: "What colour spoon did i carry from the plate stand?",
+            options: ["White", "Blue", "Green", "Yellow", "Red"],
+            correctOption: 4, // "Red"
+            groundTruth: "Red",
+            keyframes: ["assets/img/data/1_6_frame_6448.png", "assets/img/data/1_6_frame_6511.png"],
+            videoSrc: "assets/videos/processed_videos/4x_51e04dae-3ad0-48c1-b94b-c3ba0edaa99e.mp4"
         },
         {
-            type: "HAYSTACK-EGO4D",
-            question: "Who did I talk to in the living room?",
-            options: ["Mother", "Brother", "Friend", "Nobody"],
-            correctOption: 2, // "Friend"
-            groundTruth: "The person talked to a friend in the living room as shown in the video sequence.",
-            keyframes: ["assets/img/keyframe3-1.jpg", "assets/img/keyframe3-2.jpg", "assets/img/keyframe3-3.jpg", "assets/img/keyframe3-4.jpg"],
-            videoSrc: "assets/videos/example3.mp4"
+            type: "HAYSTACK-EGO4D-train-0ceaa8d0",
+            question: "Where's the microwave?",
+            options: ["Under the cabinet", "On top of the refrigerator", "Next to the stove", "Beside the sink", "In the pantry"],
+            correctOption: 1, // "On top of the refrigerator"
+            groundTruth: "On top of the refrigerator",
+            keyframes: ["assets/img/data/8_frame_6317.png", "assets/img/data/8_frame_6398.png","assets/img/data/8_frame_6452.png"],
+            videoSrc: "assets/videos/processed_videos/4x_0ceaa8d0-62fc-428e-8d60-5efc4fb13dff.mp4"
         },
         {
-            type: "HAYSTACK-EGO4D",
-            question: "What color is the book on the coffee table?",
-            options: ["Red", "Blue", "Green", "Black"],
-            correctOption: 1, // "Blue"
-            groundTruth: "The book on the coffee table is blue as shown in the keyframe.",
-            keyframes: ["assets/img/keyframe4-1.jpg", "assets/img/keyframe4-2.jpg"],
-            videoSrc: "assets/videos/example4.mp4"
+            type: "HAYSTACK-EGO4D-train-578f1c5a",
+            question: "What did I put in the case?",
+            options: ["Screwdrivers and tape", "Measuring tape and gloves", "Drill bits and electric drill", "Wrenches and pliers", "Nuts and bolts"],
+            correctOption: 2, // "Drill bits and electric drill"
+            groundTruth: "Drill bits and electric drill",
+            keyframes: ["assets/img/data/9_frame_2087.png", "assets/img/data/9_frame_2421.png","assets/img/data/9_frame_2554.png"],
+            videoSrc: "assets/videos/processed_videos/4x_578f1c5a-c87d-4382-acd4-641139937d56.mp4"
         },
         {
-            type: "HAYSTACK-LVBENCH",
-            question: "What was placed on the kitchen counter after the groceries were unpacked?",
-            options: ["Fruit bowl", "Coffee machine", "Blender", "Nothing"],
-            correctOption: 0, // "Fruit bowl"
-            groundTruth: "A fruit bowl was placed on the kitchen counter after unpacking the groceries.",
-            keyframes: ["assets/img/keyframe5-1.jpg", "assets/img/keyframe5-2.jpg", "assets/img/keyframe5-3.jpg"],
-            videoSrc: "assets/videos/example5.mp4"
+            type: "HAYSTACK-EGO4D-train-bfa30e39",
+            question: "How many pillows were on the chair?",
+            options: ["1", "4", "2", "3", "5"],
+            correctOption: 3, // "3"
+            groundTruth: "3",
+            keyframes: ["assets/img/data/11_frame_597.png"],
+            videoSrc: "assets/videos/processed_videos/4x_bfa30e39-ca86-47ed-8f7a-4c45f40c62ae.mp4"
         },
         {
-            type: "HAYSTACK-EGO4D",
-            question: "Which appliance was used first in the morning routine?",
-            options: ["Coffee maker", "Toaster", "Microwave", "Kettle"],
-            correctOption: 3, // "Kettle"
-            groundTruth: "The kettle was the first appliance used in the morning routine.",
-            keyframes: ["assets/img/keyframe6-1.jpg", "assets/img/keyframe6-2.jpg"],
-            videoSrc: "assets/videos/example6.mp4"
+            type: "HAYSTACK-EGO4D-train-04611487",
+            question: "What spanner did i pick from the pegboard?",
+            options: ["The second from the left", "The first from the left", "The fourth from the right", "The third from the right", "The fifth from the left"],
+            correctOption: 3, // "The third from the right"
+            groundTruth: "The third from the right",
+            keyframes: ["assets/img/data/16_frame_8384.png", "assets/img/data/16_frame_8401.png","assets/img/data/16_frame_8411.png"],
+            videoSrc: "assets/videos/processed_videos/4x_04611487-6407-48f4-ab20-eb4012d4dc37.mp4"
         },
         {
-            type: "HAYSTACK-LVBENCH",
-            question: "What was moved from the living room to the bedroom?",
-            options: ["Pillow", "Laptop", "Book", "Plant"],
-            correctOption: 1, // "Laptop"
-            groundTruth: "The laptop was moved from the living room to the bedroom.",
-            keyframes: ["assets/img/keyframe7-1.jpg", "assets/img/keyframe7-2.jpg", "assets/img/keyframe7-3.jpg"],
-            videoSrc: "assets/videos/example7.mp4"
+            type: "HAYSTACK-EGO4D-train-16a5a162",
+            question: "What pack of mike's lemonade did I pick from the cashier?",
+            options: ["A six-pack of Mike's Hard Lemonade", "A variety pack of Mike's Hard Lemonade", "Cannot answer (question is unclear)", "A twelve-pack of Mike's Hard Lemonade", "A single bottle of Mike's Hard Lemonade"],
+            correctOption: 2, // "Cannot answer (question is unclear)"
+            groundTruth: "Cannot answer (question is unclear)",
+            keyframes: ["assets/img/data/21_frame_9400.png", "assets/img/data/21_frame_9522.png"],
+            videoSrc: "assets/videos/processed_videos/4x_16a5a162-4a02-49d6-bbe0-24eadce45474.mp4"
         },
         {
-            type: "HAYSTACK-EGO4D",
-            question: "What color was the car that passed by the window?",
-            options: ["Red", "Blue", "Silver", "White"],
-            correctOption: 2, // "Silver"
-            groundTruth: "A silver car passed by the window as seen in the keyframe.",
+            type: "HAYSTACK-EGO4D-test-38737402",
+            question: "What did I put in the black dustbin?",
+            options: ["Trash in the vacuum cleaner", "Old newspapers and magazines", "Empty food packaging", "Broken household items", "Used paper towels from cleaning"],
+            correctOption: 0, // "Trash in the vacuum cleaner"
+            groundTruth: "Trash in the vacuum cleaner",
             keyframes: ["assets/img/keyframe8-1.jpg", "assets/img/keyframe8-2.jpg"],
             videoSrc: "assets/videos/example8.mp4"
         },
         {
-            type: "HAYSTACK-LVBENCH",
-            question: "How many people sat at the dining table during dinner?",
-            options: ["Two", "Three", "Four", "Five"],
-            correctOption: 2, // "Four"
-            groundTruth: "Four people sat at the dining table during dinner.",
+            type: "HAYSTACK-EGO4D-test-38737402",
+            question: "Where did I put the pink and white towel?",
+            options: ["The pink and white towels were in the laundry basket", "Can't answer, the pink and white towels are not shown in the video", "The pink and white towel is hanging on the bathroom door", "The pink and white towel is near the poolside chairs", "The pink and white towels are folded on the shelf"],
+            correctOption: 1, // "Can't answer, the pink and white towels are not shown in the video"
+            groundTruth: "Can't answer, the pink and white towels are not shown in the video",
             keyframes: ["assets/img/keyframe9-1.jpg", "assets/img/keyframe9-2.jpg"],
             videoSrc: "assets/videos/example9.mp4"
         },
         {
-            type: "HAYSTACK-EGO4D",
-            question: "What was placed in the refrigerator first?",
-            options: ["Milk", "Vegetables", "Leftovers", "Juice"],
-            correctOption: 0, // "Milk"
-            groundTruth: "Milk was the first item placed in the refrigerator.",
+            type: "HAYSTACK-EGO4D-test-38737402",
+            question: "Who did I interact with when I played with the dog for the second time in the living room?",
+            options: ["Child wearing a black and white t-shirt in the backyard", "Man wearing a green and white striped shirt in the kitchen", "Man wearing black and white short-sleeved shirt in the living room", "Woman wearing a blue and white long-sleeved shirt in the living room", "Teenager wearing a red and white checkered shirt in the living room"],
+            correctOption: 2, // "Man wearing black and white short-sleeved shirt in the living room"
+            groundTruth: "Man wearing black and white short-sleeved shirt in the living room",
             keyframes: ["assets/img/keyframe10-1.jpg", "assets/img/keyframe10-2.jpg", "assets/img/keyframe10-3.jpg"],
             videoSrc: "assets/videos/example10.mp4"
         },
         {
-            type: "HAYSTACK-LVBENCH",
-            question: "What was hanging on the wall behind the sofa?",
-            options: ["Clock", "Painting", "Mirror", "Calendar"],
-            correctOption: 1, // "Painting"
-            groundTruth: "A painting was hanging on the wall behind the sofa.",
+            type: "HAYSTACK-LVBENCH-test-03e90bbc",
+            question: "In what location did I see an Identification card?",
+            options: ["In the middle drawer of the filing cabinet, beneath some paperwork", "In the lower left corner of the computer desk, to the left of the headset", "Beside the printer, on the edge of the desk next to a coffee mug", "On the top shelf of the bookcase, next to a stack of notebooks", "Under the right side of the computer monitor, behind the USB hub"],
+            correctOption: 1, // "In the lower left corner of the computer desk, to the left of the headset"
+            groundTruth: "In the lower left corner of the computer desk, to the left of the headset.",
             keyframes: ["assets/img/keyframe11-1.jpg", "assets/img/keyframe11-2.jpg"],
             videoSrc: "assets/videos/example11.mp4"
         }
