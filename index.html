@@ -398,30 +398,33 @@ body {
             margin-bottom: 20px;
         }
         .options-row-top {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            display: flex;
+            flex-direction: column; /* Stack options vertically */
+            gap: 15px; 
         }
 
         .options-row-bottom {
             display: flex;
-            justify-content: center;
-            gap: 80px;
+            flex-direction: column; /* Stack options vertically */
+            gap: 15px; /* Add space between options */
+            align-items: flex-start; /* Align items to the left */
         }
         
         .option {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            text-align: center;
+            text-align: left;
         }
         
         .option-radio {
-            margin-bottom: 5px;
+            margin-right: 10px; /* Add right margin to separate radio from label */
+            margin-bottom: 0; 
         }
         
         .option-label {
             font-weight: bold;
+            text-align: left;
         }
         
         .dataset-reveal-button {
@@ -648,7 +651,7 @@ body {
             </div>
             <div class="mySlides fade">
                 <video autoplay muted playsinline loop preload="metadata" width="100%">
-                    <source src="assets/videos/TStatDemo_c1q2_v2.mov" type="video/mp4">
+                    <source src="assets/videos/TStatDemo_c1q2_v2.mp4" type="video/mp4">
                 </video>
                 <div class="text">Q2: Who did I talk to in the living room?</div>
             </div>
