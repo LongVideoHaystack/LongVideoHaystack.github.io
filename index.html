@@ -572,7 +572,7 @@ body {
     const mainVideo = document.getElementById('mainVideo');
     
     // 设置视频播放速度为2倍
-    mainVideo.playbackRate = 2.0;
+    mainVideo.playbackRate = 1.5;
     
     // Start the fade out after video has played for 5 seconds
     setTimeout(function() {
@@ -586,7 +586,7 @@ body {
         videoTitle.style.opacity = '1';
         
         // 确保每次循环时也设置2倍速
-        mainVideo.playbackRate = 2.0;
+        mainVideo.playbackRate = 1.5;
         
         // And fade it out again after 5 seconds
         setTimeout(function() {
