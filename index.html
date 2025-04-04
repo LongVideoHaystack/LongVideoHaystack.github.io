@@ -305,7 +305,7 @@
             margin-top: 1rem;
             font-size: 0.9rem;
             color: var(--gray);
-            text-align: center;
+            text-align: justify;
             max-width: 100%;
             margin-left: auto;
             margin-right: auto;
@@ -737,7 +737,6 @@
 
             <div class="video-container">
                 <video src="assets/videos/TStarDemo_c1q1_v2.mp4" autoplay loop muted playsinline></video>
-                <div class="video-caption">Demonstration of T* framework in action</div>
             </div>
         </div>
     </section>
@@ -751,7 +750,6 @@
             
             <div class="video-container">
                 <video src="assets/videos/Framework_0301_demo.mov" autoplay loop muted playsinline></video>
-                <div class="video-caption" style="color: purple; font-weight: bold;">Needle-in-Haystack in LongVideo Understanding</div>
             </div>
             
             <p>
@@ -924,6 +922,12 @@
                             </div>
                         </div>
                         
+                        <div class="keyframe-nav">
+                            <button class="nav-button keyframe-prev" onclick="showKeyframe(currentKeyframeIndex-1)">&larr; Prev</button>
+                            <span class="keyframe-counter" id="keyframeCounter">Frame(s)</span>
+                            <button class="nav-button keyframe-next" onclick="showKeyframe(currentKeyframeIndex+1)">Next &rarr;</button>
+                        </div>
+                        
                         <div class="keyframe-dots">
                             <div class="keyframe-dot active"></div>
                             <div class="keyframe-dot"></div>
@@ -949,7 +953,7 @@
                 <h2>Conclusion</h2>
             </div>
             
-            <p>
+            <p style="text-align: justify;"></p>
                 We revisit temporal search for long-form video understanding, focusing on a core challenge for state-of-the-art (SOTA) long-context vision-language models (VLMs). First, we formalize temporal search as a "Long Video Haystack" problem: finding a minimal set of relevant frames (among tens of thousands) given specific queries. To validate this, we introduce <strong>LV-HAYSTACK</strong>, featuring 3,874 human-annotated instances and fine-grained evaluation metrics for keyframe search quality and efficiency. Experimental results on <strong>LV-HAYSTACK</strong> reveal a significant gap in temporal search capabilities under SOTA keyframe selection methods. We further propose a lightweight keyframe searching framework, <em>T*</em>, reframing the costly temporal search into a spatial search task. Extensive experiments show that integrating <em>T*</em> into existing methods significantly boosts SOTA performance. We hope <strong>LV-HAYSTACK</strong> and <em>T*</em> will foster impactful algorithmic advances for efficient long-form video understanding.
             </p>
             
