@@ -548,55 +548,6 @@ body {
     <meta name="twitter:data2" content="5 minutes"/>
 </head>
 <body>
-
-<div style="max-width: 80%; margin: 20px auto; background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
-    <video
-      id="mainVideo"
-      src="assets/videos/Framework_0301_demo.mov"
-      autoplay
-      loop
-      muted
-      playsinline
-      style="width: 100%; height: auto; display: block; object-fit: contain; max-height: 90vh; background-color: white;"
-    ></video>
-    <div id="videoTitle" class="content" style="padding: 20px; position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; background-color: rgba(255,255,255,0.8); opacity: 1; transition: opacity 2s;">
-        <h1 style="margin-bottom: 8px; color: #4E2A84;">Needle-in-Haystack in LongVideo Understanding</h1>
-        <p style="color: #555;"> —— Re-thinking Temporal Search for Long-Form Video Understanding</p>
-    </div>
-</div>
-
-<script>
-  // Make the title fade out after a few seconds
-  document.addEventListener('DOMContentLoaded', function() {
-    const videoTitle = document.getElementById('videoTitle');
-    const mainVideo = document.getElementById('mainVideo');
-    
-    // 设置视频播放速度为2倍
-    mainVideo.playbackRate = 1.5;
-    
-    // Start the fade out after video has played for 5 seconds
-    setTimeout(function() {
-      videoTitle.style.opacity = '0';
-    }, 5000);
-    
-    // When video is reset (looped), show the title again
-    mainVideo.addEventListener('seeked', function() {
-      // If the video is close to the beginning (within 0.5 seconds)
-      if (mainVideo.currentTime < 0.5) {
-        videoTitle.style.opacity = '1';
-        
-        // 确保每次循环时也设置2倍速
-        mainVideo.playbackRate = 1.5;
-        
-        // And fade it out again after 5 seconds
-        setTimeout(function() {
-          videoTitle.style.opacity = '0';
-        }, 5000);
-      }
-    });
-  });
-</script>
-
 <div id="title_slide">
     <div class="title_left">
         
@@ -708,7 +659,54 @@ body {
         <p style="font-size: 10px;"><strong>Figure 1.</strong> Extrinsic evaluation results demonstrate how <em>T*</em> improves VLMs by selecting 8 keyframes (needle) from a large haystack, highlighting the significance of <strong>vision-centric search</strong>.</p>
     </div>
     <h1>Method Overview</h1>
+    <div style="text-align: center; margin: 30px auto;">
+        <div style="max-width: 600px; margin: 20px auto; background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative;">
+            <video
+                id="mainVideo"
+                src="assets/videos/Framework_0301_demo.mov"
+                autoplay
+                loop
+                muted
+                playsinline
+                style="width: 100%; height: auto; display: block; object-fit: contain; max-height: 90vh; background-color: white;"
+            ></video>
+            <div id="videoTitle" class="content" style="padding: 15px; position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; background-color: rgba(255,255,255,0.8); opacity: 1; transition: opacity 2s;">
+                <h3 style="margin-bottom: 4px; color: #4E2A84;">Needle-in-Haystack in LongVideo Understanding</h3>
+            </div>
+        </div>
+    </div>
     
+    <!-- Add this script at the end of your HTML body or in a script section -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const videoTitle = document.getElementById('videoTitle');
+        const mainVideo = document.getElementById('mainVideo');
+        
+        // Set video playback speed to 1.5x
+        mainVideo.playbackRate = 1.5;
+        
+        // Start the fade out after video has played for 5 seconds
+        setTimeout(function() {
+            videoTitle.style.opacity = '0';
+        }, 5000);
+        
+        // When video is reset (looped), show the title again
+        mainVideo.addEventListener('seeked', function() {
+            // If the video is close to the beginning (within 0.5 seconds)
+            if (mainVideo.currentTime < 0.5) {
+                videoTitle.style.opacity = '1';
+                
+                // Ensure playback rate is set to 1.5x on each loop
+                mainVideo.playbackRate = 1.5;
+                
+                // And fade it out again after 5 seconds
+                setTimeout(function() {
+                    videoTitle.style.opacity = '0';
+                }, 5000);
+            }
+        });
+    });
+    </script>
     <div style="font-family: Arial, sans-serif; text-align: justify;">
         <p>
             <strong> <em>T*</em></strong> is an advanced temporal search framework designed to efficiently identify key frames relevant to specific queries.
