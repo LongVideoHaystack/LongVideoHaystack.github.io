@@ -984,34 +984,105 @@
     <script>
         // Dataset examples
         const datasetExamples = [
-            {
-                type: "HAYSTACK-EGO4D-train-51e04dae",
-                question: "In what location did i see the basket?",
-                options: ["In the left glass door of the shelf above the sink", "Next to the stove", "On the right side of the sink", "Inside the cabinet under the sink", "On top of the refrigerator"],
-                correctOption: 0,
-                groundTruth: "In the left glass door of the shelf above the sink",
-                keyframes: ["assets/img/data/1_frame_1841.png", "assets/img/data/1_frame_1921.png"],
-                videoSrc: "assets/videos/processed_videos/4x_51e04dae-3ad0-48c1-b94b-c3ba0edaa99e.mp4"
-            },
-            {
-                type: "HAYSTACK-EGO4D-train-51e04dae",
-                question: "What colour spoon did i carry from the plate stand?",
-                options: ["White", "Blue", "Green", "Yellow", "Red"],
-                correctOption: 4,
-                groundTruth: "Red",
-                keyframes: ["assets/img/data/1_6_frame_6448.png", "assets/img/data/1_6_frame_6511.png"],
-                videoSrc: "assets/videos/processed_videos/4x_51e04dae-3ad0-48c1-b94b-c3ba0edaa99e.mp4"
-            },
-            // ... (other dataset examples remain the same)
-            {
-                type: "HAYSTACK-LVBENCH-test-03e90bbc",
-                question: "In what location did I see an Identification card?",
-                options: ["In the middle drawer of the filing cabinet, beneath some paperwork", "In the lower left corner of the computer desk, to the left of the headset", "Beside the printer, on the edge of the desk next to a coffee mug", "On the top shelf of the bookcase, next to a stack of notebooks", "Under the right side of the computer monitor, behind the USB hub"],
-                correctOption: 1,
-                groundTruth: "In the lower left corner of the computer desk, to the left of the headset.",
-                keyframes: ["assets/img/keyframe11-1.jpg", "assets/img/keyframe11-2.jpg"],
-                videoSrc: "assets/videos/processed_videos/4x_03e90bbc-7d6b-423c-84d9-b5be3eff11c5.mp4"
-            }
+        {
+            type: "HAYSTACK-EGO4D-train-51e04dae",
+            question: "In what location did i see the basket?",
+            options: ["In the left glass door of the shelf above the sink", "Next to the stove", "On the right side of the sink", "Inside the cabinet under the sink", "On top of the refrigerator"],
+            correctOption: 0, // "In the left glass door of the shelf above the sink"
+            groundTruth: "In the left glass door of the shelf above the sink",
+            keyframes: ["assets/img/data/1_frame_1841.png", "assets/img/data/1_frame_1921.png"],
+            videoSrc: "assets/videos/processed_videos/4x_51e04dae-3ad0-48c1-b94b-c3ba0edaa99e.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D-train-51e04dae",
+            question: "What colour spoon did i carry from the plate stand?",
+            options: ["White", "Blue", "Green", "Yellow", "Red"],
+            correctOption: 4, // "Red"
+            groundTruth: "Red",
+            keyframes: ["assets/img/data/1_6_frame_6448.png", "assets/img/data/1_6_frame_6511.png"],
+            videoSrc: "assets/videos/processed_videos/4x_51e04dae-3ad0-48c1-b94b-c3ba0edaa99e.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D-train-0ceaa8d0",
+            question: "Where's the microwave?",
+            options: ["Under the cabinet", "On top of the refrigerator", "Next to the stove", "Beside the sink", "In the pantry"],
+            correctOption: 1, // "On top of the refrigerator"
+            groundTruth: "On top of the refrigerator",
+            keyframes: ["assets/img/data/8_frame_6317.png", "assets/img/data/8_frame_6398.png","assets/img/data/8_frame_6452.png"],
+            videoSrc: "assets/videos/processed_videos/4x_0ceaa8d0-62fc-428e-8d60-5efc4fb13dff.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D-train-578f1c5a",
+            question: "What did I put in the case?",
+            options: ["Screwdrivers and tape", "Measuring tape and gloves", "Drill bits and electric drill", "Wrenches and pliers", "Nuts and bolts"],
+            correctOption: 2, // "Drill bits and electric drill"
+            groundTruth: "Drill bits and electric drill",
+            keyframes: ["assets/img/data/9_frame_2087.png", "assets/img/data/9_frame_2421.png","assets/img/data/9_frame_2554.png"],
+            videoSrc: "assets/videos/processed_videos/4x_578f1c5a-c87d-4382-acd4-641139937d56.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D-train-bfa30e39",
+            question: "How many pillows were on the chair?",
+            options: ["1", "4", "2", "3", "5"],
+            correctOption: 3, // "3"
+            groundTruth: "3",
+            keyframes: ["assets/img/data/11_frame_597.png"],
+            videoSrc: "assets/videos/processed_videos/4x_bfa30e39-ca86-47ed-8f7a-4c45f40c62ae.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D-train-04611487",
+            question: "What spanner did i pick from the pegboard?",
+            options: ["The second from the left", "The first from the left", "The fourth from the right", "The third from the right", "The fifth from the left"],
+            correctOption: 3, // "The third from the right"
+            groundTruth: "The third from the right",
+            keyframes: ["assets/img/data/16_frame_8384.png", "assets/img/data/16_frame_8401.png","assets/img/data/16_frame_8411.png"],
+            videoSrc: "assets/videos/processed_videos/4x_04611487-6407-48f4-ab20-eb4012d4dc37.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D-train-16a5a162",
+            question: "What pack of mike's lemonade did I pick from the cashier?",
+            options: ["A six-pack of Mike's Hard Lemonade", "A variety pack of Mike's Hard Lemonade", "Cannot answer (question is unclear)", "A twelve-pack of Mike's Hard Lemonade", "A single bottle of Mike's Hard Lemonade"],
+            correctOption: 2, // "Cannot answer (question is unclear)"
+            groundTruth: "Cannot answer (question is unclear)",
+            keyframes: ["assets/img/data/21_frame_9400.png", "assets/img/data/21_frame_9522.png"],
+            videoSrc: "assets/videos/processed_videos/4x_16a5a162-4a02-49d6-bbe0-24eadce45474.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D-test-38737402",
+            question: "What did I put in the black dustbin?",
+            options: ["Trash in the vacuum cleaner", "Old newspapers and magazines", "Empty food packaging", "Broken household items", "Used paper towels from cleaning"],
+            correctOption: 0, // "Trash in the vacuum cleaner"
+            groundTruth: "Trash in the vacuum cleaner",
+            keyframes: ["assets/img/keyframe8-1.jpg", "assets/img/keyframe8-2.jpg"],
+            videoSrc: "assets/videos/processed_videos/4x_38737402-19bd-4689-9e74-3af391b15feb.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D-test-38737402",
+            question: "Where did I put the pink and white towel?",
+            options: ["The pink and white towels were in the laundry basket", "Can't answer, the pink and white towels are not shown in the video", "The pink and white towel is hanging on the bathroom door", "The pink and white towel is near the poolside chairs", "The pink and white towels are folded on the shelf"],
+            correctOption: 1, // "Can't answer, the pink and white towels are not shown in the video"
+            groundTruth: "Can't answer, the pink and white towels are not shown in the video",
+            keyframes: ["assets/img/keyframe9-1.jpg", "assets/img/keyframe9-2.jpg"],
+            videoSrc: "assets/videos/processed_videos/4x_38737402-19bd-4689-9e74-3af391b15feb.mp4"
+        },
+        {
+            type: "HAYSTACK-EGO4D-test-38737402",
+            question: "Who did I interact with when I played with the dog for the second time in the living room?",
+            options: ["Child wearing a black and white t-shirt in the backyard", "Man wearing a green and white striped shirt in the kitchen", "Man wearing black and white short-sleeved shirt in the living room", "Woman wearing a blue and white long-sleeved shirt in the living room", "Teenager wearing a red and white checkered shirt in the living room"],
+            correctOption: 2, // "Man wearing black and white short-sleeved shirt in the living room"
+            groundTruth: "Man wearing black and white short-sleeved shirt in the living room",
+            keyframes: ["assets/img/keyframe10-1.jpg", "assets/img/keyframe10-2.jpg", "assets/img/keyframe10-3.jpg"],
+            videoSrc: "assets/videos/processed_videos/4x_38737402-19bd-4689-9e74-3af391b15feb.mp4"
+        },
+        {
+            type: "HAYSTACK-LVBENCH-test-03e90bbc",
+            question: "In what location did I see an Identification card?",
+            options: ["In the middle drawer of the filing cabinet, beneath some paperwork", "In the lower left corner of the computer desk, to the left of the headset", "Beside the printer, on the edge of the desk next to a coffee mug", "On the top shelf of the bookcase, next to a stack of notebooks", "Under the right side of the computer monitor, behind the USB hub"],
+            correctOption: 1, // "In the lower left corner of the computer desk, to the left of the headset"
+            groundTruth: "In the lower left corner of the computer desk, to the left of the headset.",
+            keyframes: ["assets/img/keyframe11-1.jpg", "assets/img/keyframe11-2.jpg"],
+            videoSrc: "assets/videos/processed_videos/4x_03e90bbc-7d6b-423c-84d9-b5be3eff11c5.mp4"
+        }
         ];
         
         let currentExampleIndex = 0;
