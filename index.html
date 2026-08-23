@@ -4,6 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>T*: Re-thinking Temporal Search for Long-Form Video Understanding</title>
+    <meta name="description" content="T* (TStar) reframes temporal search in long-form video as spatial search. LV-Haystack benchmark: 480 hours of video, 15,092 annotated instances. CVPR 2025.">
+    <meta name="keywords" content="temporal search, long-form video understanding, long video question answering, keyframe search, LV-Haystack, Long Video Haystack, vision-language models, video QA, CVPR 2025">
+    <link rel="canonical" href="https://longvideohaystack.github.io/">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://longvideohaystack.github.io/">
+    <meta property="og:title" content="T*: Re-thinking Temporal Search for Long-Form Video Understanding">
+    <meta property="og:description" content="T* (TStar) reframes temporal search in long-form video as spatial search. LV-Haystack benchmark: 480 hours of video, 15,092 annotated instances. CVPR 2025.">
+    <meta property="og:image" content="https://longvideohaystack.github.io/assets/img/methodv10.png">
+    <meta property="og:image:width" content="3386">
+    <meta property="og:image:height" content="1339">
+    <meta property="og:image:alt" content="T* method overview: question grounding, iterative temporal search as spatial search, and downstream video QA">
+    <meta property="og:site_name" content="LV-Haystack">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="T*: Re-thinking Temporal Search for Long-Form Video Understanding">
+    <meta name="twitter:description" content="T* (TStar) reframes temporal search in long-form video as spatial search. LV-Haystack benchmark: 480 hours of video, 15,092 annotated instances. CVPR 2025.">
+    <meta name="twitter:image" content="https://longvideohaystack.github.io/assets/img/methodv10.png">
+
+    <!-- Google Scholar (Highwire) -->
+    <meta name="citation_title" content="T*: Re-thinking Temporal Search for Long-Form Video Understanding">
+    <meta name="citation_author" content="Jinhui Ye">
+    <meta name="citation_author" content="Zihan Wang">
+    <meta name="citation_author" content="Haosen Sun">
+    <meta name="citation_author" content="Keshigeyan Chandrasegaran">
+    <meta name="citation_author" content="Zane Durante">
+    <meta name="citation_author" content="Cristobal Eyzaguirre">
+    <meta name="citation_author" content="Yonatan Bisk">
+    <meta name="citation_author" content="Juan Carlos Niebles">
+    <meta name="citation_author" content="Ehsan Adeli">
+    <meta name="citation_author" content="Li Fei-Fei">
+    <meta name="citation_author" content="Jiajun Wu">
+    <meta name="citation_author" content="Manling Li">
+    <meta name="citation_publication_date" content="2025/04/03">
+    <meta name="citation_arxiv_id" content="2504.02259">
+    <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2504.02259">
+    <meta name="citation_abstract_html_url" content="https://arxiv.org/abs/2504.02259">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ScholarlyArticle",
+          "@id": "https://longvideohaystack.github.io/#paper",
+          "headline": "T*: Re-thinking Temporal Search for Long-Form Video Understanding",
+          "url": "https://longvideohaystack.github.io/",
+          "sameAs": "https://arxiv.org/abs/2504.02259",
+          "datePublished": "2025-04-03",
+          "abstract": "We frame temporal search as a Long Video Haystack problem: finding a minimal set of relevant frames from tens of thousands based on specific queries. We introduce LV-Haystack, the first dataset with 480 hours of videos and 15,092 human-annotated instances for training and evaluation, and T*, a lightweight temporal search framework that reframes costly temporal search as spatial search.",
+          "keywords": ["temporal search", "long-form video understanding", "long video question answering", "keyframe search", "vision-language models", "LV-Haystack", "CVPR 2025"],
+          "author": [
+            {"@type": "Person", "name": "Jinhui Ye", "url": "https://jhuiye.com/"},
+            {"@type": "Person", "name": "Zihan Wang", "url": "https://zihanwang314.github.io/"},
+            {"@type": "Person", "name": "Haosen Sun", "url": "https://haosensun.github.io/"},
+            {"@type": "Person", "name": "Keshigeyan Chandrasegaran", "url": "https://keshik6.github.io/"},
+            {"@type": "Person", "name": "Zane Durante", "url": "https://zanedurante.github.io/"},
+            {"@type": "Person", "name": "Cristobal Eyzaguirre", "url": "https://ceyzaguirre4.github.io/"},
+            {"@type": "Person", "name": "Yonatan Bisk", "url": "https://talkingtorobots.com/yonatanbisk.html"},
+            {"@type": "Person", "name": "Juan Carlos Niebles", "url": "https://www.niebles.net/"},
+            {"@type": "Person", "name": "Ehsan Adeli", "url": "https://profiles.stanford.edu/ehsan-adeli"},
+            {"@type": "Person", "name": "Li Fei-Fei", "url": "https://profiles.stanford.edu/fei-fei-li/"},
+            {"@type": "Person", "name": "Jiajun Wu", "url": "https://jiajunwu.com/"},
+            {"@type": "Person", "@id": "https://limanling.github.io/#person", "name": "Manling Li", "url": "https://limanling.github.io/"}
+          ]
+        },
+        {
+          "@type": "Dataset",
+          "name": "LV-Haystack",
+          "alternateName": "LongVideoHaystack",
+          "description": "A benchmark for temporal search in long-form videos: 480 hours of videos and 15,092 human-annotated instances for training and evaluation, spanning egocentric (HAYSTACK-EGO4D) and allocentric (HAYSTACK-LVBENCH) subsets.",
+          "url": "https://huggingface.co/datasets/LVHaystack/LongVideoHaystack",
+          "sameAs": ["https://arxiv.org/abs/2504.02259", "https://longvideohaystack.github.io/"],
+          "creator": {"@type": "Organization", "name": "LV-Haystack Research Team"},
+          "license": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          "name": "TStar",
+          "codeRepository": "https://github.com/LongVideoHaystack/TStar",
+          "programmingLanguage": "Python",
+          "description": "TStar is a unified temporal search framework for long-form video question answering."
+        },
+        {
+          "@type": "WebSite",
+          "name": "LV-Haystack",
+          "alternateName": ["T*", "TStar", "Long Video Haystack"],
+          "url": "https://longvideohaystack.github.io/"
+        }
+      ]
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -715,7 +809,7 @@
                     <a href="assets/pdf/TStar.pdf" target="_blank" class="button">PDF</a>
                     <a href="#" target="_blank" class="button">Twitter</a>
                     <a href="https://github.com/LongVideoHaystack/TStar" target="_blank" class="button">Code</a>
-                    <a href="https://www.lvhaystackai.com/demo" target="_blank" class="button">Demo</a>
+                    <a href="demo/" target="_blank" class="button">Demo</a>
                     <a href="https://huggingface.co/datasets/LVHaystack/LongVideoHaystack" target="_blank" class="button">Data</a>
                 </div>
             </div>

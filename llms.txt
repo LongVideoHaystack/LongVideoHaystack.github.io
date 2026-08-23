@@ -1,0 +1,40 @@
+# T*: Re-thinking Temporal Search for Long-Form Video Understanding (LV-Haystack)
+
+> T* (TStar) is a lightweight temporal search framework for long-form video understanding that reframes costly temporal search as spatial search, introduced with the LV-Haystack benchmark in the CVPR 2025 paper "T*: Re-thinking Temporal Search for Long-Form Video Understanding" (arXiv:2504.02259) by Jinhui Ye, Zihan Wang, Haosen Sun, Keshigeyan Chandrasegaran, Zane Durante, Cristobal Eyzaguirre, Yonatan Bisk, Juan Carlos Niebles, Ehsan Adeli, Li Fei-Fei, Jiajun Wu, and Manling Li (Stanford University, Northwestern University, Carnegie Mellon University).
+
+What is the Long Video Haystack problem? It frames temporal search as finding a minimal set of relevant frames (for example, one to five) from tens of thousands of frames in a long video, given a specific query. What is T*? T* leverages image-based visual localization and an adaptive zooming-in mechanism that operates across both temporal and spatial dimensions, so a vision-language model (VLM) only needs to reason over a small set of retrieved keyframes.
+
+## Key facts
+
+- LV-Haystack is the first temporal search dataset of its kind: 480 hours of videos and 15,092 human-annotated instances for both training and evaluation.
+- LV-Haystack has two subsets: HAYSTACK-EGO4D (egocentric: 988 videos, 423 hours, 15,092 QA pairs, 28,300 keyframes) and HAYSTACK-LVBENCH (allocentric: 114 videos, 26.7 hours, 342 QA pairs, 496 keyframes).
+- Current state-of-the-art search methods achieve only a 2.1% temporal F1 score on the LongVideoBench subset of LV-Haystack, revealing a large research gap.
+- Under a 32-frame inference budget, T* improves GPT-4o from 50.5% to 53.1% and LLaVA-OneVision-OV-72B from 56.5% to 62.4% on the LongVideoBench XL subset.
+- Accepted at CVPR 2025.
+
+## Links
+
+- arXiv abstract: https://arxiv.org/abs/2504.02259
+- arXiv PDF: https://arxiv.org/pdf/2504.02259
+- Project page: https://longvideohaystack.github.io/
+- Code (GitHub): https://github.com/LongVideoHaystack/TStar
+- Dataset (Hugging Face): https://huggingface.co/datasets/LVHaystack/LongVideoHaystack
+- Author homepage (Manling Li, Northwestern University): https://limanling.github.io/
+
+## Relation to other benchmarks
+
+Unlike long-video QA benchmarks such as LongVideoBench and Video-MME that evaluate end-to-end answer accuracy, LV-Haystack provides human-annotated reference keyframes and fine-grained metrics that disentangle temporal search quality and efficiency from downstream video question answering.
+
+## BibTeX
+
+```bibtex
+@misc{tstar,
+  title={T*: Re-thinking Temporal Search for Long-Form Video Understanding},
+  author={Jinhui Ye and Zihan Wang and Haosen Sun and Keshigeyan Chandrasegaran and Zane Durante and Cristobal Eyzaguirre and Yonatan Bisk and Juan Carlos Niebles and Ehsan Adeli and Li Fei-Fei and Jiajun Wu and Manling Li},
+  year={2025},
+  eprint={2504.02259},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2504.02259}
+}
+```
